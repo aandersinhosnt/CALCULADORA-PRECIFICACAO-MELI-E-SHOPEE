@@ -1,525 +1,373 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calculadora Marketplace 2026 — Anderson Pereira</title>
-  <meta name="description" content="Calculadora de precificação para Mercado Livre e Shopee com taxas oficiais 2026. Desenvolvida por Anderson Pereira." />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Calculadora Marketplace 2026 — Anderson Pereira</title>
+<meta name="description" content="Calculadora de precificação para Mercado Livre e Shopee com todas as categorias e taxas oficiais 2026."/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#ffffff;--bg2:#f7f7f5;--bg3:#f0efe8;
+  --text:#1a1a18;--text2:#6b6b63;--text3:#9b9b90;
+  --border:rgba(0,0,0,0.12);--border2:rgba(0,0,0,0.22);
+  --radius-md:8px;--radius-lg:12px;
+  --shadow:0 2px 12px rgba(0,0,0,0.08);
+}
+@media(prefers-color-scheme:dark){
+  :root{--bg:#1c1c1a;--bg2:#252523;--bg3:#2e2e2b;--text:#f0efe8;--text2:#9b9b90;--text3:#6b6b63;--border:rgba(255,255,255,0.12);--border2:rgba(255,255,255,0.22);--shadow:0 2px 12px rgba(0,0,0,0.4);}
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg3);color:var(--text);min-height:100vh;padding:1.5rem 1rem 3rem;}
+.page{max-width:700px;margin:0 auto;}
 
-    :root {
-      --bg: #ffffff;
-      --bg2: #f7f7f5;
-      --bg3: #f0efe8;
-      --text: #1a1a18;
-      --text2: #6b6b63;
-      --text3: #9b9b90;
-      --border: rgba(0,0,0,0.12);
-      --border2: rgba(0,0,0,0.22);
-      --radius-md: 8px;
-      --radius-lg: 12px;
-      --shadow: 0 2px 12px rgba(0,0,0,0.08);
-    }
+/* HEADER */
+.header-bar{background:linear-gradient(135deg,#FFF8E1,#FFF0EB);border:0.5px solid #FFB300;border-radius:var(--radius-lg);padding:1rem 1.25rem;margin-bottom:.85rem;}
+@media(prefers-color-scheme:dark){.header-bar{background:linear-gradient(135deg,#2a2200,#2a1000);}}
+.header-title{font-size:20px;font-weight:500;display:flex;align-items:center;gap:9px;margin-bottom:2px;}
+.header-sub{font-size:11px;color:var(--text2);}
+.dev-credit{font-size:10px;font-weight:500;margin-top:5px;}
+.dev-credit span.ml{color:#7B4F00;}
+.dev-credit span.sp{color:#7B2200;}
 
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #1c1c1a;
-        --bg2: #252523;
-        --bg3: #2e2e2b;
-        --text: #f0efe8;
-        --text2: #9b9b90;
-        --text3: #6b6b63;
-        --border: rgba(255,255,255,0.12);
-        --border2: rgba(255,255,255,0.22);
-        --shadow: 0 2px 12px rgba(0,0,0,0.4);
-      }
-    }
+/* CARDS */
+.card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:1.1rem 1.25rem;margin-bottom:.85rem;box-shadow:var(--shadow);}
+.card-title{font-size:11px;font-weight:500;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.85rem;display:flex;align-items:center;gap:6px;}
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--bg3);
-      color: var(--text);
-      min-height: 100vh;
-      padding: 1.5rem 1rem 3rem;
-    }
+/* INPUTS */
+.field{display:flex;flex-direction:column;gap:3px;}
+.field label{font-size:11px;color:var(--text2);font-weight:500;}
+.field input,.field select{width:100%;padding:8px 10px;font-size:13px;border:0.5px solid var(--border2);border-radius:var(--radius-md);background:var(--bg2);color:var(--text);outline:none;transition:border-color .2s;}
+.field input:focus,.field select:focus{border-color:#FFB300;box-shadow:0 0 0 2px rgba(255,179,0,.15);}
+input[type=number]{-moz-appearance:textfield;}
+input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+@media(max-width:500px){.g3{grid-template-columns:1fr 1fr;}.g2{grid-template-columns:1fr;}}
 
-    .page { max-width: 700px; margin: 0 auto; }
+/* BUSCA */
+.search-row{display:flex;gap:8px;}
+.search-row input{flex:1;padding:9px 12px;font-size:13px;border:0.5px solid var(--border2);border-radius:var(--radius-md);background:var(--bg2);color:var(--text);outline:none;}
+.search-row input:focus{border-color:#FFB300;box-shadow:0 0 0 2px rgba(255,179,0,.15);}
+.input-wrap{position:relative;}
+.suggestions-dropdown{position:absolute;top:100%;left:0;right:0;background:var(--bg);border:0.5px solid var(--border2);border-radius:var(--radius-md);margin-top:2px;z-index:200;max-height:260px;overflow-y:auto;display:none;box-shadow:var(--shadow);}
+.suggestions-dropdown.show{display:block;}
+.drop-item{padding:9px 13px;font-size:12px;cursor:pointer;border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.drop-item:last-child{border-bottom:none;}
+.drop-item:hover,.drop-item.active{background:var(--bg2);}
+.di-path{font-size:10px;color:var(--text2);margin-top:1px;}
 
-    /* HEADER */
-    .header-bar {
-      border-radius: var(--radius-lg);
-      padding: 1rem 1.25rem;
-      margin-bottom: .85rem;
-      transition: background .3s;
-    }
-    .header-bar.ml { background: #FFF8E1; border: 0.5px solid #FFB300; }
-    .header-bar.shopee { background: #FFF0EB; border: 0.5px solid #FF6D3B; }
-    .header-bar.both { background: linear-gradient(90deg,#FFF8E1 50%,#FFF0EB 50%); border: 0.5px solid #FFB300; }
-    @media (prefers-color-scheme: dark) {
-      .header-bar.ml { background: #2a2200; border-color: #FFB300; }
-      .header-bar.shopee { background: #2a1000; border-color: #FF6D3B; }
-      .header-bar.both { background: linear-gradient(90deg,#2a2200 50%,#2a1000 50%); border-color: #FFB300; }
-    }
-    .header-title { font-size: 20px; font-weight: 500; display: flex; align-items: center; gap: 9px; margin-bottom: 2px; }
-    .header-sub { font-size: 11px; color: var(--text2); }
-    .dev-credit { font-size: 10px; font-weight: 500; margin-top: 5px; color: #7B4F00; }
+/* BOTÕES */
+.btn-buscar{padding:9px 16px;font-size:12px;font-weight:500;border-radius:var(--radius-md);cursor:pointer;white-space:nowrap;border:none;background:linear-gradient(90deg,#FFB300,#FF6D3B);color:#fff;transition:opacity .2s;}
+.btn-buscar:hover{opacity:.88;}
+.btn-pdf{display:flex;align-items:center;gap:5px;padding:9px 16px;font-size:12px;font-weight:500;border-radius:var(--radius-md);border:none;background:linear-gradient(90deg,#FFB300,#FF6D3B);color:#fff;cursor:pointer;}
+.btn-pdf:hover{opacity:.88;}
 
-    /* CARDS */
-    .card {
-      background: var(--bg);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 1.1rem 1.25rem;
-      margin-bottom: .85rem;
-      box-shadow: var(--shadow);
-    }
-    .card-title {
-      font-size: 11px; font-weight: 500; color: var(--text2);
-      text-transform: uppercase; letter-spacing: .05em;
-      margin-bottom: .85rem; display: flex; align-items: center; gap: 6px;
-    }
+/* TAGS */
+.tag{display:inline-flex;align-items:center;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:500;}
+.tag-ml{background:#FFF8E1;color:#7B4F00;}.tag-sp{background:#FFF0EB;color:#7B2200;}
+.tag-grn{background:#EAF3DE;color:#3B6D11;}.tag-amb{background:#FAEEDA;color:#854F0B;}.tag-red{background:#FCEBEB;color:#A32D2D;}
+@media(prefers-color-scheme:dark){
+  .tag-ml{background:#2a2200;color:#FFD54F;}.tag-sp{background:#2a1000;color:#FFAB91;}
+  .tag-grn{background:#1a2d0e;color:#97C459;}.tag-amb{background:#2a1e00;color:#EF9F27;}.tag-red{background:#2d0e0e;color:#F09595;}
+}
 
-    /* INPUTS */
-    .field { display: flex; flex-direction: column; gap: 3px; }
-    .field label { font-size: 11px; color: var(--text2); font-weight: 500; display: flex; align-items: center; gap: 4px; }
-    .field input, .field select {
-      width: 100%; padding: 8px 10px; font-size: 13px;
-      border: 0.5px solid var(--border2); border-radius: var(--radius-md);
-      background: var(--bg2); color: var(--text); outline: none;
-      transition: border-color .2s;
-    }
-    .field input:focus, .field select:focus { border-color: #FFB300; box-shadow: 0 0 0 2px rgba(255,179,0,.15); }
-    input[type=number] { -moz-appearance: textfield; }
-    input[type=number]::-webkit-outer-spin-button,
-    input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
+/* ALERTS */
+.alert{display:flex;align-items:flex-start;gap:8px;padding:9px 11px;border-radius:var(--radius-md);font-size:12px;border:0.5px solid;margin-bottom:.75rem;}
+.alert-grn{background:#EAF3DE;border-color:#97C459;color:#27500A;}
+.alert-amb{background:#FAEEDA;border-color:#EF9F27;color:#633806;}
+.alert-red{background:#FCEBEB;border-color:#F09595;color:#791F1F;}
+@media(prefers-color-scheme:dark){
+  .alert-grn{background:#1a2d0e;color:#97C459;}.alert-amb{background:#2a1e00;color:#EF9F27;}.alert-red{background:#2d0e0e;color:#F09595;}
+}
 
-    /* GRID */
-    .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-    .g4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; }
-    @media (max-width: 480px) {
-      .g3 { grid-template-columns: 1fr 1fr; }
-      .g2 { grid-template-columns: 1fr; }
-    }
+/* TAXA BOXES (categoria identificada) */
+.taxa-boxes{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;}
+.taxa-box{border-radius:var(--radius-md);padding:10px 12px;border:0.5px solid;}
+.taxa-box.ml{background:#FFF8E1;border-color:#FFB300;}
+.taxa-box.sp{background:#FFF0EB;border-color:#FF6D3B;}
+@media(prefers-color-scheme:dark){.taxa-box.ml{background:#2a2200;}.taxa-box.sp{background:#2a1000;}}
+.taxa-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px;display:flex;align-items:center;gap:5px;}
+.taxa-label.ml{color:#7B4F00;}.taxa-label.sp{color:#7B2200;}
+.taxa-sub{font-size:10px;color:var(--text2);margin-top:3px;}
 
-    /* SEARCH */
-    .search-row { display: flex; gap: 8px; }
-    .search-row input {
-      flex: 1; padding: 9px 12px; font-size: 13px;
-      border: 0.5px solid var(--border2); border-radius: var(--radius-md);
-      background: var(--bg2); color: var(--text); outline: none;
-    }
-    .search-row input:focus { border-color: #FFB300; box-shadow: 0 0 0 2px rgba(255,179,0,.15); }
-    .input-wrap { position: relative; }
+/* TOOLTIP */
+.tip-wrap{position:relative;display:inline-flex;align-items:center;}
+.tip-icon{width:15px;height:15px;border-radius:50%;color:#fff;font-size:9px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;border:none;line-height:1;font-family:inherit;}
+.tip-icon.ml{background:#FFB300;}.tip-icon.sp{background:#FF6D3B;}
+.tip-box{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--bg);border:0.5px solid var(--border2);border-radius:var(--radius-md);padding:10px 12px;font-size:11px;color:var(--text);line-height:1.5;width:275px;z-index:300;box-shadow:var(--shadow);}
+.tip-wrap:hover .tip-box,.tip-wrap:focus-within .tip-box{display:block;}
+.tip-box::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--border2);}
+.tip-row{display:flex;justify-content:space-between;gap:8px;padding:3px 0;border-bottom:0.5px solid var(--border);font-size:10px;}
+.tip-row:last-child{border-bottom:none;}
+.tip-title{font-size:11px;font-weight:500;margin-bottom:5px;}
 
-    /* DROPDOWN */
-    .suggestions-dropdown {
-      position: absolute; top: 100%; left: 0; right: 0;
-      background: var(--bg); border: 0.5px solid var(--border2);
-      border-radius: var(--radius-md); margin-top: 2px;
-      z-index: 200; max-height: 240px; overflow-y: auto; display: none;
-      box-shadow: var(--shadow);
-    }
-    .suggestions-dropdown.show { display: block; }
-    .drop-item {
-      padding: 9px 13px; font-size: 12px; cursor: pointer;
-      border-bottom: 0.5px solid var(--border); display: flex;
-      align-items: center; justify-content: space-between; gap: 8px;
-    }
-    .drop-item:last-child { border-bottom: none; }
-    .drop-item:hover, .drop-item.active { background: var(--bg2); }
-    .drop-item .di-path { font-size: 10px; color: var(--text2); margin-top: 1px; }
+/* PLANO ML */
+.plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.plan-card{border:0.5px solid var(--border);border-radius:var(--radius-md);padding:.85rem;cursor:pointer;position:relative;transition:border-color .2s;}
+.plan-card.sel{border:2px solid #FFB300;background:#FFFDE7;}
+@media(prefers-color-scheme:dark){.plan-card.sel{background:#2a2200;}}
+.plan-name{font-size:12px;font-weight:500;margin-bottom:2px;}
+.plan-fee{font-size:18px;font-weight:500;color:#E65C00;}
+.plan-desc{font-size:10px;color:var(--text2);margin-top:2px;}
+.pchk{position:absolute;top:8px;right:8px;width:15px;height:15px;border-radius:50%;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;}
 
-    /* BUTTONS */
-    .btn {
-      padding: 9px 16px; font-size: 12px; font-weight: 500;
-      border-radius: var(--radius-md); cursor: pointer;
-      white-space: nowrap; border: none; transition: background .2s;
-    }
-    .btn-ml { background: #FFB300; color: #fff; }
-    .btn-ml:hover { background: #E65C00; }
-    .btn-pdf {
-      display: flex; align-items: center; gap: 5px;
-      padding: 9px 16px; font-size: 12px; font-weight: 500;
-      border-radius: var(--radius-md); border: none;
-      background: linear-gradient(90deg, #FFB300, #FF6D3B);
-      color: #fff; cursor: pointer;
-    }
-    .btn-pdf:hover { opacity: .9; }
+/* FRETE */
+.frete-info{padding:8px 10px;border-radius:var(--radius-md);font-size:12px;margin-top:6px;}
+.frete-info.gratis{background:#EAF3DE;border:0.5px solid #97C459;color:#27500A;}
+.frete-info.cobrado{background:#FFF8E1;border:0.5px solid #FFB300;color:#7B4F00;}
+@media(prefers-color-scheme:dark){.frete-info.gratis{background:#1a2d0e;color:#97C459;}.frete-info.cobrado{background:#2a2200;color:#FFD54F;}}
+.divider{height:0.5px;background:var(--border);margin:.75rem 0;}
 
-    /* PLATFORM TABS */
-    .ptabs { display: flex; gap: 7px; margin-bottom: .85rem; }
-    .ptab {
-      flex: 1; padding: 9px 6px; border: 1.5px solid var(--border2);
-      border-radius: var(--radius-md); cursor: pointer; text-align: center;
-      font-size: 12px; font-weight: 500; color: var(--text2);
-      background: transparent; transition: all .2s;
-    }
-    .ptab .pi { font-size: 17px; display: block; margin-bottom: 2px; }
-    .ptab.aml { border-color: #FFB300; color: #7B4F00; background: #FFF8E1; }
-    .ptab.asp { border-color: #FF6D3B; color: #7B2200; background: #FFF0EB; }
-    .ptab.aboth { background: linear-gradient(90deg,#FFF8E1 50%,#FFF0EB 50%); border-color: #FFB300; color: #555; }
-    @media (prefers-color-scheme: dark) {
-      .ptab.aml { background: #2a2200; color: #FFB300; }
-      .ptab.asp { background: #2a1000; color: #FF6D3B; }
-      .ptab.aboth { background: linear-gradient(90deg,#2a2200 50%,#2a1000 50%); }
-    }
+/* RESULTADO */
+.metric{background:var(--bg2);border-radius:var(--radius-md);padding:10px 12px;}
+.ml2{font-size:10px;color:var(--text2);font-weight:500;text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px;}
+.mv{font-size:17px;font-weight:500;}
+.mv.green{color:#3B6D11;}.mv.amber{color:#854F0B;}.mv.red{color:#A32D2D;}
+.mv.mlc{color:#E65C00;}.mv.spc{color:#FF6D3B;}
+@media(prefers-color-scheme:dark){.mv.green{color:#97C459;}.mv.amber{color:#EF9F27;}.mv.red{color:#F09595;}.mv.mlc{color:#FFB300;}.mv.spc{color:#FFAB91;}}
+.cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:.75rem;}
+.cmp-col{border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:.9rem;}
+.cmp-header{font-size:12px;font-weight:500;margin-bottom:.65rem;display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+.bkd{border-top:0.5px solid var(--border);padding-top:.85rem;margin-top:.85rem;}
+.br{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:12px;color:var(--text2);border-bottom:0.5px solid var(--border);}
+.br:last-child{border-bottom:none;}
+.bv{font-weight:500;color:var(--text);}
+.br.tot{color:var(--text);font-weight:500;font-size:13px;padding-top:6px;}
 
-    /* TAGS */
-    .tag {
-      display: inline-flex; align-items: center; padding: 2px 8px;
-      border-radius: 99px; font-size: 10px; font-weight: 500;
-    }
-    .tag-ml { background: #FFF8E1; color: #7B4F00; }
-    .tag-sp { background: #FFF0EB; color: #7B2200; }
-    .tag-grn { background: #EAF3DE; color: #3B6D11; }
-    .tag-amb { background: #FAEEDA; color: #854F0B; }
-    .tag-red { background: #FCEBEB; color: #A32D2D; }
-    @media (prefers-color-scheme: dark) {
-      .tag-ml { background: #2a2200; color: #FFD54F; }
-      .tag-sp { background: #2a1000; color: #FFAB91; }
-      .tag-grn { background: #1a2d0e; color: #97C459; }
-      .tag-amb { background: #2a1e00; color: #EF9F27; }
-      .tag-red { background: #2d0e0e; color: #F09595; }
-    }
+/* WINNER BANNER */
+.winner-bar{padding:9px 13px;border-radius:var(--radius-md);font-size:12px;display:flex;align-items:center;gap:7px;margin-bottom:.75rem;}
+.winner-bar.ml{background:#FFF8E1;border:0.5px solid #FFB300;}
+.winner-bar.sp{background:#FFF0EB;border:0.5px solid #FF6D3B;}
+@media(prefers-color-scheme:dark){.winner-bar.ml{background:#2a2200;}.winner-bar.sp{background:#2a1000;}}
 
-    /* ALERTS */
-    .alert {
-      display: flex; align-items: flex-start; gap: 8px;
-      padding: 9px 11px; border-radius: var(--radius-md);
-      font-size: 12px; border: 0.5px solid;
-    }
-    .alert-grn { background: #EAF3DE; border-color: #97C459; color: #27500A; }
-    .alert-amb { background: #FAEEDA; border-color: #EF9F27; color: #633806; }
-    .alert-red { background: #FCEBEB; border-color: #F09595; color: #791F1F; }
-    .alert-ml { background: #FFF8E1; border-color: #FFB300; color: #7B4F00; }
-    .alert-sp { background: #FFF0EB; border-color: #FF6D3B; color: #7B2200; }
-    @media (prefers-color-scheme: dark) {
-      .alert-grn { background: #1a2d0e; color: #97C459; }
-      .alert-amb { background: #2a1e00; color: #EF9F27; }
-      .alert-red { background: #2d0e0e; color: #F09595; }
-      .alert-ml { background: #2a2200; color: #FFD54F; }
-      .alert-sp { background: #2a1000; color: #FFAB91; }
-    }
+/* PDF BAR */
+.pdf-bar{display:none;align-items:center;justify-content:space-between;padding:10px 14px;background:linear-gradient(90deg,#FFF8E1 50%,#FFF0EB 50%);border:0.5px solid #FFB300;border-radius:var(--radius-md);margin-top:.85rem;}
+.pdf-bar.show{display:flex;}
+@media(prefers-color-scheme:dark){.pdf-bar{background:linear-gradient(90deg,#2a2200 50%,#2a1000 50%);}}
 
-    /* TAXA BOXES */
-    .taxa-box { border-radius: var(--radius-md); padding: 10px 12px; border: 0.5px solid; }
-    .taxa-box.ml { background: #FFF8E1; border-color: #FFB300; }
-    .taxa-box.sp { background: #FFF0EB; border-color: #FF6D3B; }
-    @media (prefers-color-scheme: dark) {
-      .taxa-box.ml { background: #2a2200; }
-      .taxa-box.sp { background: #2a1000; }
-    }
-    .taxa-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 3px; display: flex; align-items: center; gap: 5px; }
-    .taxa-label.ml { color: #7B4F00; }
-    .taxa-label.sp { color: #7B2200; }
-    .taxa-val { font-size: 20px; font-weight: 500; }
-    .taxa-val.ml { color: #E65C00; }
-    .taxa-val.sp { color: #FF6D3B; }
-    .taxa-sub { font-size: 10px; color: var(--text2); margin-top: 3px; }
-
-    /* TOOLTIP */
-    .tip-wrap { position: relative; display: inline-flex; align-items: center; }
-    .tip-icon {
-      width: 15px; height: 15px; border-radius: 50%; background: #FFB300;
-      color: #fff; font-size: 9px; font-weight: 700; cursor: pointer;
-      display: inline-flex; align-items: center; justify-content: center;
-      flex-shrink: 0; border: none; line-height: 1; font-family: inherit;
-    }
-    .tip-icon.sp { background: #FF6D3B; }
-    .tip-box {
-      display: none; position: absolute; bottom: calc(100% + 6px); left: 50%;
-      transform: translateX(-50%);
-      background: var(--bg); border: 0.5px solid var(--border2);
-      border-radius: var(--radius-md); padding: 10px 12px;
-      font-size: 11px; color: var(--text); line-height: 1.5;
-      width: 275px; z-index: 300; box-shadow: var(--shadow);
-    }
-    .tip-wrap:hover .tip-box,
-    .tip-wrap:focus-within .tip-box { display: block; }
-    .tip-box::after {
-      content: ''; position: absolute; top: 100%; left: 50%;
-      transform: translateX(-50%);
-      border: 5px solid transparent;
-      border-top-color: var(--border2);
-    }
-    .tip-row {
-      display: flex; justify-content: space-between; gap: 8px;
-      padding: 3px 0; border-bottom: 0.5px solid var(--border);
-      font-size: 10px;
-    }
-    .tip-row:last-child { border-bottom: none; }
-    .tip-title { font-size: 11px; font-weight: 500; margin-bottom: 5px; }
-
-    /* METRICS */
-    .metric { background: var(--bg2); border-radius: var(--radius-md); padding: 10px 12px; }
-    .ml2 { font-size: 10px; color: var(--text2); font-weight: 500; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 3px; }
-    .mv { font-size: 17px; font-weight: 500; }
-    .mv.green { color: #3B6D11; }
-    .mv.amber { color: #854F0B; }
-    .mv.red { color: #A32D2D; }
-    .mv.mlc { color: #E65C00; }
-    .mv.spc { color: #FF6D3B; }
-    @media (prefers-color-scheme: dark) {
-      .mv.green { color: #97C459; }
-      .mv.amber { color: #EF9F27; }
-      .mv.red { color: #F09595; }
-      .mv.mlc { color: #FFB300; }
-      .mv.spc { color: #FFAB91; }
-    }
-
-    /* BREAKDOWN */
-    .bkd { border-top: 0.5px solid var(--border); padding-top: .85rem; margin-top: .85rem; }
-    .br {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 4px 0; font-size: 12px; color: var(--text2);
-      border-bottom: 0.5px solid var(--border);
-    }
-    .br:last-child { border-bottom: none; }
-    .bv { font-weight: 500; color: var(--text); }
-    .br.tot { color: var(--text); font-weight: 500; font-size: 13px; padding-top: 6px; }
-
-    /* DIVIDER / SWITCH */
-    .divider { height: 0.5px; background: var(--border); margin: .75rem 0; }
-    .sw-row { display: flex; align-items: center; justify-content: space-between; padding: 7px 0; }
-    .swi { position: relative; width: 34px; height: 19px; flex-shrink: 0; }
-    .swi input { opacity: 0; width: 0; height: 0; }
-    .swsl { position: absolute; cursor: pointer; inset: 0; background: var(--border2); border-radius: 99px; transition: .2s; }
-    .swsl:before { content: ""; position: absolute; width: 13px; height: 13px; left: 3px; bottom: 3px; background: white; border-radius: 50%; transition: .2s; }
-    input:checked + .swsl { background: #FFB300; }
-    input:checked + .swsl:before { transform: translateX(15px); }
-
-    /* FRETE */
-    .frete-info { padding: 8px 10px; border-radius: var(--radius-md); font-size: 12px; margin-top: 6px; }
-    .frete-info.gratis { background: #EAF3DE; border: 0.5px solid #97C459; color: #27500A; }
-    .frete-info.cobrado { background: #FFF8E1; border: 0.5px solid #FFB300; color: #7B4F00; }
-    @media (prefers-color-scheme: dark) {
-      .frete-info.gratis { background: #1a2d0e; color: #97C459; }
-      .frete-info.cobrado { background: #2a2200; color: #FFD54F; }
-    }
-
-    /* PDF BAR */
-    .pdf-bar {
-      display: none; align-items: center; justify-content: space-between;
-      padding: 10px 14px;
-      background: linear-gradient(90deg, #FFF8E1 50%, #FFF0EB 50%);
-      border: 0.5px solid #FFB300; border-radius: var(--radius-md);
-      margin-top: .85rem;
-    }
-    .pdf-bar.show { display: flex; }
-    @media (prefers-color-scheme: dark) {
-      .pdf-bar { background: linear-gradient(90deg, #2a2200 50%, #2a1000 50%); }
-    }
-
-    /* EMPTY */
-    .empty { text-align: center; padding: 1.5rem; color: var(--text2); font-size: 12px; }
-
-    /* FOOTER */
-    .footer-credit {
-      text-align: center; padding: .85rem 0 .25rem;
-      font-size: 11px; color: var(--text2);
-      border-top: 0.5px solid var(--border); margin-top: 1rem;
-    }
-    .footer-credit strong { color: var(--text); }
-
-    /* PLAN CARDS */
-    .plan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
-    .plan-card {
-      border: 0.5px solid var(--border); border-radius: var(--radius-md);
-      padding: .85rem; cursor: pointer; position: relative; transition: border-color .2s;
-    }
-    .plan-card.sml { border: 2px solid #FFB300; background: #FFFDE7; }
-    @media (prefers-color-scheme: dark) { .plan-card.sml { background: #2a2200; } }
-    .plan-name { font-size: 12px; font-weight: 500; margin-bottom: 2px; }
-    .plan-fee { font-size: 18px; font-weight: 500; color: #E65C00; }
-    .plan-desc { font-size: 10px; color: var(--text2); margin-top: 2px; }
-    .pchk {
-      position: absolute; top: 8px; right: 8px; width: 15px; height: 15px;
-      border-radius: 50%; border: 1.5px solid var(--border2);
-      display: flex; align-items: center; justify-content: center;
-    }
-
-    /* CMP COLS */
-    .cmp-col { border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: .9rem; }
-  </style>
+/* FOOTER */
+.footer-credit{text-align:center;padding:.85rem 0 .25rem;font-size:11px;color:var(--text2);border-top:0.5px solid var(--border);margin-top:1rem;}
+.footer-credit strong{color:var(--text);}
+.empty{text-align:center;padding:1.5rem;color:var(--text2);font-size:12px;}
+</style>
 </head>
 <body>
 <div class="page">
 
-  <!-- HEADER -->
-  <div class="header-bar ml" id="headerBar">
-    <div class="header-title">
-      <i class="ti ti-shopping-cart" style="font-size:20px;color:#FFB300;"></i>
-      <span id="headerTitle">Calculadora Mercado Livre</span>
+<!-- HEADER -->
+<div class="header-bar">
+  <div class="header-title">
+    <i class="ti ti-shopping-cart" style="font-size:20px;color:#FFB300;"></i>
+    Calculadora Marketplace 2026
+  </div>
+  <div class="header-sub">🟡 Mercado Livre &amp; 🟠 Shopee · Todas as categorias · Taxas oficiais mar/2026</div>
+  <div class="dev-credit">✦ Desenvolvida por <span class="ml">Anderson</span> <span class="sp">Pereira</span></div>
+</div>
+
+<!-- BUSCA -->
+<div class="card">
+  <div class="card-title"><i class="ti ti-search"></i> Pesquisar produto</div>
+  <div class="input-wrap" style="margin-bottom:.75rem;">
+    <div class="search-row">
+      <input type="text" id="searchInput" placeholder="Ex: Tênis, iPhone, Furadeira, Violão, Antiguidade, Ração..." autocomplete="off" oninput="onSearch(this.value)" onkeydown="onKey(event)"/>
+      <button class="btn-buscar" onclick="doSearch()"><i class="ti ti-search"></i> Buscar</button>
     </div>
-    <div class="header-sub" id="headerSub">Precificação com taxas oficiais 2026 · Categorias e subcategorias do ML</div>
-    <div class="dev-credit" id="devCredit">✦ Desenvolvida por Anderson Pereira</div>
+    <div class="suggestions-dropdown" id="dropDown"></div>
   </div>
+  <div id="selectedCatInfo" style="display:none;"></div>
+</div>
 
-  <!-- PLATFORM TABS -->
-  <div class="ptabs">
-    <div class="ptab aml" id="tab-ml" onclick="setPlatform('ml')"><span class="pi">🟡</span>Mercado Livre</div>
-    <div class="ptab" id="tab-shopee" onclick="setPlatform('shopee')"><span class="pi">🟠</span>Shopee</div>
-    <div class="ptab" id="tab-both" onclick="setPlatform('both')"><span class="pi">⚖️</span>Comparar os dois</div>
-  </div>
-
-  <!-- BUSCA -->
-  <div class="card">
-    <div class="card-title"><i class="ti ti-search"></i> Pesquisar produto</div>
-    <div class="input-wrap" style="margin-bottom:.75rem;">
-      <div class="search-row">
-        <input type="text" id="searchInput" placeholder="Ex: Tênis Nike, iPhone 15, Furadeira Bosch, Whey..." autocomplete="off" oninput="onSearch(this.value)" onkeydown="onKey(event)" />
-        <button class="btn btn-ml" onclick="doSearch()"><i class="ti ti-search"></i> Buscar</button>
-      </div>
-      <div class="suggestions-dropdown" id="dropDown"></div>
+<!-- PLANO ML -->
+<div class="card" id="cardPlano" style="display:none;">
+  <div class="card-title" style="color:#7B4F00;"><i class="ti ti-building-store"></i> Plano Mercado Livre</div>
+  <div class="plan-grid">
+    <div class="plan-card" id="planC" onclick="selectPlan('classico')">
+      <div class="pchk" id="ckC"></div>
+      <div class="plan-name">Clássico</div>
+      <div class="plan-fee" id="feeC">11%</div>
+      <div class="plan-desc">Comprador paga juros · Menos exposição</div>
     </div>
-    <div id="selectedCatInfo" style="display:none;"></div>
-  </div>
-
-  <!-- PLANO ML -->
-  <div class="card" id="sectionML">
-    <div class="card-title" style="color:#7B4F00;"><i class="ti ti-building-store"></i> Plano Mercado Livre</div>
-    <div class="plan-grid">
-      <div class="plan-card" id="planC" onclick="selectMLPlan('classico')">
-        <div class="pchk" id="ckC"></div>
-        <div class="plan-name">Clássico</div>
-        <div class="plan-fee" id="feeC">11%</div>
-        <div class="plan-desc">Comprador paga juros · Menos exposição</div>
-      </div>
-      <div class="plan-card sml" id="planP" onclick="selectMLPlan('premium')">
-        <div class="pchk" id="ckP" style="background:#FFB300;border-color:#FFB300;"><i class="ti ti-check" style="font-size:9px;color:#fff;"></i></div>
-        <div class="plan-name">Premium <span class="tag tag-ml" style="font-size:9px;">Recomendado</span></div>
-        <div class="plan-fee" id="feeP">16%</div>
-        <div class="plan-desc">Parcelamento sem juros · Máxima exposição</div>
-      </div>
+    <div class="plan-card sel" id="planP" onclick="selectPlan('premium')">
+      <div class="pchk" id="ckP" style="background:#FFB300;border-color:#FFB300;"><i class="ti ti-check" style="font-size:9px;color:#fff;"></i></div>
+      <div class="plan-name">Premium <span class="tag tag-ml" style="font-size:9px;">Recomendado</span></div>
+      <div class="plan-fee" id="feeP">16%</div>
+      <div class="plan-desc">Parcelamento sem juros · Máxima exposição</div>
     </div>
-  </div>
-
-  <!-- DADOS -->
-  <div class="card" id="cardCalc" style="display:none;">
-    <div class="card-title"><i class="ti ti-calculator"></i> Dados para cálculo</div>
-    <div class="g3" style="margin-bottom:10px;">
-      <div class="field"><label>Custo do produto (R$)</label><input type="number" id="costPrice" placeholder="0,00" min="0" step="0.01" oninput="onCostChange()" /></div>
-      <div class="field"><label>Margem desejada (%)</label><input type="number" id="margin" placeholder="Ex: 30" min="0" max="79" step="0.5" oninput="onCostChange()" /></div>
-      <div class="field"><label>Imposto / DAS (%)</label><input type="number" id="taxRate" value="6" min="0" max="30" step="0.1" oninput="calculate()" /></div>
-    </div>
-    <div class="divider"></div>
-    <!-- FRETE INTELIGENTE -->
-    <div>
-      <div style="font-size:12px;font-weight:500;margin-bottom:6px;"><i class="ti ti-truck"></i> Frete</div>
-      <div id="freteAutoInfo" style="display:none;"></div>
-      <div id="freteCampo" style="display:none;margin-top:8px;">
-        <div class="field">
-          <label>Custo do frete para você (R$)</label>
-          <input type="number" id="freteCusto" placeholder="Ex: 25,00" min="0" step="0.01" oninput="calculate()" />
-        </div>
-        <div style="font-size:10px;color:var(--text2);margin-top:4px;"><i class="ti ti-info-circle"></i> Shopee subsidia até R$20. ML subsidia conforme reputação. Informe o valor que você paga na etiqueta.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- RESULTADO -->
-  <div id="resultArea"></div>
-
-  <div class="pdf-bar" id="pdfBar">
-    <div style="font-size:12px;color:#7B4F00;display:flex;align-items:center;gap:6px;"><i class="ti ti-file-text" style="font-size:15px;"></i> Relatório pronto para exportar</div>
-    <button class="btn-pdf" onclick="downloadPDF()"><i class="ti ti-file-download"></i> Baixar PDF</button>
-  </div>
-
-  <div class="footer-credit">
-    <i class="ti ti-code"></i> Desenvolvida por <strong>Anderson Pereira</strong> · Calculadora Marketplace 2026 · Taxas oficiais ML e Shopee
   </div>
 </div>
 
+<!-- DADOS -->
+<div class="card" id="cardDados" style="display:none;">
+  <div class="card-title"><i class="ti ti-calculator"></i> Dados para cálculo</div>
+  <div class="g3" style="margin-bottom:10px;">
+    <div class="field"><label>Custo do produto (R$)</label><input type="number" id="costPrice" placeholder="0,00" min="0" step="0.01" oninput="onCostChange()"/></div>
+    <div class="field"><label>Margem desejada (%)</label><input type="number" id="margin" placeholder="Ex: 30" min="0" max="79" step="0.5" oninput="onCostChange()"/></div>
+    <div class="field"><label>Imposto / DAS (%)</label><input type="number" id="taxRate" value="6" min="0" max="30" step="0.1" oninput="calculate()"/></div>
+  </div>
+  <div class="divider"></div>
+  <div>
+    <div style="font-size:12px;font-weight:500;margin-bottom:4px;"><i class="ti ti-truck"></i> Frete</div>
+    <div id="freteAutoInfo" style="display:none;"></div>
+    <div id="freteCampo" style="display:none;margin-top:8px;">
+      <div class="field">
+        <label>Custo do frete para você (R$)</label>
+        <input type="number" id="freteCusto" placeholder="Ex: 25,00" min="0" step="0.01" oninput="calculate()"/>
+      </div>
+      <div style="font-size:10px;color:var(--text2);margin-top:4px;"><i class="ti ti-info-circle"></i> Shopee subsidia até R$20. ML subsidia conforme sua reputação. Informe o valor que você paga na etiqueta.</div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTADO -->
+<div id="resultArea"></div>
+
+<div class="pdf-bar" id="pdfBar">
+  <div style="font-size:12px;color:#7B4F00;display:flex;align-items:center;gap:6px;"><i class="ti ti-file-text" style="font-size:15px;"></i> Relatório pronto para exportar</div>
+  <button class="btn-pdf" onclick="downloadPDF()"><i class="ti ti-file-download"></i> Baixar PDF</button>
+</div>
+
+<div class="footer-credit">
+  <i class="ti ti-code"></i> Desenvolvida por <strong>Anderson Pereira</strong> · Calculadora Marketplace 2026 · Todas as categorias ML e Shopee
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
+// ============================================================
+// TABELA COMPLETA — todas as categorias oficiais do ML 2026
+// ============================================================
 const CATS=[
-  {cat:'Celulares e Telefones',sub:'Smartphones',taxC:11,taxP:16,keys:['celular','smartphone','iphone','samsung galaxy','motorola','xiaomi','moto g','galaxy','poco','realme']},
+  {cat:'Celulares e Telefones',sub:'Smartphones',taxC:11,taxP:16,keys:['celular','smartphone','iphone','samsung galaxy','motorola','xiaomi','moto g','galaxy','poco','realme','oneplus']},
   {cat:'Celulares e Telefones',sub:'Acessórios para Celulares',taxC:13,taxP:18,keys:['capinha','capa celular','pelicula','carregador celular','cabo usb','fone bluetooth','powerbank','suporte celular']},
   {cat:'Celulares e Telefones',sub:'Peças para Celular',taxC:11,taxP:16,keys:['tela celular','bateria celular','conector carga','flex celular','lcd celular']},
-  {cat:'Informática',sub:'Notebooks',taxC:11,taxP:16,keys:['notebook','laptop','macbook','chromebook','ultrabook']},
-  {cat:'Informática',sub:'Computadores',taxC:11,taxP:16,keys:['computador','pc gamer','desktop','cpu','gabinete computador']},
-  {cat:'Informática',sub:'Monitores',taxC:11,taxP:16,keys:['monitor','monitor gamer','tela computador']},
+  {cat:'Celulares e Telefones',sub:'Telefones Fixos',taxC:11,taxP:16,keys:['telefone fixo','ramal','pabx','telefone sem fio']},
+  {cat:'Informática',sub:'Notebooks e Laptops',taxC:11,taxP:16,keys:['notebook','laptop','macbook','chromebook','ultrabook']},
+  {cat:'Informática',sub:'Computadores e Desktops',taxC:11,taxP:16,keys:['computador','pc gamer','desktop','cpu','gabinete computador']},
+  {cat:'Informática',sub:'Monitores',taxC:11,taxP:16,keys:['monitor','monitor gamer','tela computador','display']},
   {cat:'Informática',sub:'Teclados e Mouses',taxC:13,taxP:18,keys:['teclado','mouse','mousepad','combo teclado','teclado mecanico','mouse gamer']},
   {cat:'Informática',sub:'Impressoras',taxC:11,taxP:16,keys:['impressora','multifuncional','impressora laser','scanner','plotter']},
-  {cat:'Informática',sub:'Armazenamento',taxC:11,taxP:16,keys:['hd externo','ssd','hd interno','pendrive','memoria ram','cartao de memoria']},
-  {cat:'Informática',sub:'Componentes para PC',taxC:11,taxP:16,keys:['placa de video','processador','placa mae','fonte pc','cooler','memoria ddr','rtx','intel','amd ryzen']},
-  {cat:'Informática',sub:'Redes e Conectividade',taxC:13,taxP:18,keys:['roteador','switch','cabo de rede','adaptador wifi','repetidor wifi','modem']},
+  {cat:'Informática',sub:'Armazenamento',taxC:11,taxP:16,keys:['hd externo','ssd','hd interno','pendrive','memoria ram','cartao de memoria','nvme']},
+  {cat:'Informática',sub:'Componentes para PC',taxC:11,taxP:16,keys:['placa de video','processador','placa mae','fonte pc','cooler','memoria ddr','rtx','rx ','intel','amd ryzen','gpu']},
+  {cat:'Informática',sub:'Redes e Conectividade',taxC:13,taxP:18,keys:['roteador','switch','cabo de rede','adaptador wifi','repetidor wifi','modem','access point']},
   {cat:'Informática',sub:'Tablets',taxC:11,taxP:16,keys:['tablet','ipad','kindle','e-reader','caneta tablet','capa tablet']},
-  {cat:'Eletrônicos, Áudio e Vídeo',sub:'TVs',taxC:11,taxP:16,keys:['televisao','tv ','smart tv','tv 4k','tv 55','tv 65','projetor']},
+  {cat:'Eletrônicos, Áudio e Vídeo',sub:'TVs e Projetores',taxC:13,taxP:18,keys:['televisao','tv ','smart tv','tv 4k','tv 55','tv 65','projetor']},
   {cat:'Eletrônicos, Áudio e Vídeo',sub:'Áudio Portátil',taxC:13,taxP:18,keys:['caixa de som','speaker bluetooth','caixa bluetooth','soundbar','headphone','headset','fone over-ear','airpods']},
-  {cat:'Eletrônicos, Áudio e Vídeo',sub:'Home Theater',taxC:11,taxP:16,keys:['home theater','receiver','amplificador','caixa acustica']},
-  {cat:'Eletrônicos, Áudio e Vídeo',sub:'Drones',taxC:11,taxP:16,keys:['drone','dji','mini drone','quadricoptero']},
-  {cat:'Câmeras e Acessórios',sub:'Câmeras Fotográficas',taxC:11,taxP:16,keys:['camera fotografica','dslr','mirrorless','camera digital','gopro','lente camera']},
+  {cat:'Eletrônicos, Áudio e Vídeo',sub:'Home Theater e Som',taxC:13,taxP:18,keys:['home theater','receiver','amplificador','caixa acustica','subwoofer','equipamento de som']},
+  {cat:'Eletrônicos, Áudio e Vídeo',sub:'Drones',taxC:11,taxP:16,keys:['drone','dji','mini drone','quadricoptero','fpv']},
+  {cat:'Eletrônicos, Áudio e Vídeo',sub:'Acessórios de TV',taxC:13,taxP:18,keys:['suporte tv','controle universal','cabo hdmi','streaming stick','fire tv','chromecast']},
+  {cat:'Câmeras e Acessórios',sub:'Câmeras Fotográficas',taxC:11,taxP:16,keys:['camera fotografica','dslr','mirrorless','camera digital','gopro','lente camera','objetiva']},
   {cat:'Câmeras e Acessórios',sub:'Câmeras de Segurança',taxC:13,taxP:18,keys:['camera seguranca','cctv','camera ip','dvr','nvr']},
-  {cat:'Calçados, Roupas e Bolsas',sub:'Tênis',taxC:14,taxP:19,keys:['tenis','sneaker','nike','adidas','vans','converse','new balance','puma','sandalia','alpargata','havaianas']},
-  {cat:'Calçados, Roupas e Bolsas',sub:'Calçados Femininos',taxC:14,taxP:19,keys:['scarpin','sapatilha','rasteirinha','ankle boot','bota feminina','sapato feminino']},
+  {cat:'Câmeras e Acessórios',sub:'Filmadoras',taxC:11,taxP:16,keys:['filmadora','camera de video','action camera','camera esportiva']},
+  {cat:'Calçados, Roupas e Bolsas',sub:'Tênis e Calçados Esportivos',taxC:14,taxP:19,keys:['tenis','sneaker','nike','adidas','vans','converse','new balance','puma','alpargata','havaianas']},
+  {cat:'Calçados, Roupas e Bolsas',sub:'Sandálias e Chinelos',taxC:14,taxP:19,keys:['sandalia','chinelo','slide','rasteirinha','tamanco','papete']},
+  {cat:'Calçados, Roupas e Bolsas',sub:'Calçados Femininos',taxC:14,taxP:19,keys:['scarpin','sapatilha','ankle boot','bota feminina','sapato feminino','plataforma','salto alto']},
   {cat:'Calçados, Roupas e Bolsas',sub:'Calçados Masculinos',taxC:14,taxP:19,keys:['sapato masculino','oxford','mocassim','derby','bota masculina']},
   {cat:'Calçados, Roupas e Bolsas',sub:'Roupas Femininas',taxC:14,taxP:19,keys:['vestido','blusa','saia','calcinha','sutia','legging','casaco feminino','jaqueta feminina','pijama']},
-  {cat:'Calçados, Roupas e Bolsas',sub:'Roupas Masculinas',taxC:14,taxP:19,keys:['camiseta','camisa','calca jeans','bermuda','moletom','cueca','meia','polo','blazer','terno']},
-  {cat:'Calçados, Roupas e Bolsas',sub:'Bolsas e Mochilas',taxC:14,taxP:19,keys:['bolsa','mochila','carteira','clutch','bolsa de couro','mochila escolar','porta-notebook']},
-  {cat:'Calçados, Roupas e Bolsas',sub:'Acessórios de Moda',taxC:14,taxP:19,keys:['oculos de sol','relogio','cinto','chapeu','bone','cachecol']},
-  {cat:'Beleza e Cuidado Pessoal',sub:'Perfumaria e Cosméticos',taxC:13,taxP:18,keys:['perfume','colonia','desodorante','hidratante','creme facial','protetor solar','base maquiagem','batom','blush']},
-  {cat:'Beleza e Cuidado Pessoal',sub:'Cabelos',taxC:13,taxP:18,keys:['shampoo','condicionador','mascara capilar','secador de cabelo','prancha','chapinha','escova progressiva','tintura']},
-  {cat:'Beleza e Cuidado Pessoal',sub:'Unhas',taxC:13,taxP:18,keys:['esmalte','gel unhas','kit unhas','nail art']},
-  {cat:'Beleza e Cuidado Pessoal',sub:'Aparelhos de Beleza',taxC:13,taxP:18,keys:['depilador','barbeador eletrico','aparador de pelos','maquina de cortar cabelo']},
+  {cat:'Calçados, Roupas e Bolsas',sub:'Roupas Masculinas',taxC:14,taxP:19,keys:['camiseta','camisa','calca jeans','bermuda','moletom','cueca','meia','polo','blazer','terno','roupa masculina']},
+  {cat:'Calçados, Roupas e Bolsas',sub:'Bolsas, Mochilas e Carteiras',taxC:14,taxP:19,keys:['bolsa','mochila','carteira','clutch','bolsa de couro','mochila escolar','porta-notebook','necessaire']},
+  {cat:'Calçados, Roupas e Bolsas',sub:'Acessórios de Moda',taxC:14,taxP:19,keys:['oculos de sol','cinto','chapeu','bone','cachecol','luva']},
+  {cat:'Joias e Relógios',sub:'Relógios',taxC:12,taxP:17,keys:['relogio','smartwatch','relogio de pulso','fossil','casio','seiko','relogio masculino','relogio feminino']},
+  {cat:'Joias e Relógios',sub:'Joias e Semijoias',taxC:12,taxP:17,keys:['anel','brinco','colar','pulseira','corrente','pingente','alianca','joia','semijoia','folheado','banhado a ouro']},
+  {cat:'Beleza e Cuidado Pessoal',sub:'Perfumaria',taxC:14,taxP:19,keys:['perfume','colonia','eau de parfum','eau de toilette','deo colonia']},
+  {cat:'Beleza e Cuidado Pessoal',sub:'Maquiagem',taxC:14,taxP:19,keys:['maquiagem','batom','base maquiagem','blush','sombra','delineador','rimel','po compacto','corretivo']},
+  {cat:'Beleza e Cuidado Pessoal',sub:'Skincare e Hidratação',taxC:14,taxP:19,keys:['hidratante','creme facial','protetor solar','serum','vitamina c rosto','sabonete facial']},
+  {cat:'Beleza e Cuidado Pessoal',sub:'Cabelos',taxC:14,taxP:19,keys:['shampoo','condicionador','mascara capilar','secador de cabelo','prancha','chapinha','escova progressiva','tintura']},
+  {cat:'Beleza e Cuidado Pessoal',sub:'Corpo e Banho',taxC:14,taxP:19,keys:['desodorante','sabonete','creme corporal','esfoliante','oleo corporal','gel de banho']},
+  {cat:'Beleza e Cuidado Pessoal',sub:'Unhas',taxC:14,taxP:19,keys:['esmalte','gel unhas','kit unhas','nail art','lixa','cabine uv']},
+  {cat:'Beleza e Cuidado Pessoal',sub:'Aparelhos de Beleza',taxC:14,taxP:19,keys:['depilador','barbeador eletrico','aparador de pelos','maquina de cortar cabelo','epilador']},
   {cat:'Eletrodomésticos',sub:'Refrigeração',taxC:11,taxP:16,keys:['geladeira','refrigerador','freezer','bebedouro','frigobar','adega']},
   {cat:'Eletrodomésticos',sub:'Cocção e Forno',taxC:11,taxP:16,keys:['fogao','cooktop','forno eletrico','microondas','airfryer','fritadeira eletrica','churrasqueira eletrica']},
-  {cat:'Eletrodomésticos',sub:'Lavagem',taxC:11,taxP:16,keys:['maquina de lavar','lava e seca','lava-loucas','centrifuga','tanquinho']},
-  {cat:'Eletrodomésticos',sub:'Climatização',taxC:11,taxP:16,keys:['ar condicionado','ventilador','climatizador','purificador de ar','umidificador','aquecedor']},
-  {cat:'Eletrodomésticos',sub:'Cozinha e Preparação',taxC:11,taxP:16,keys:['liquidificador','batedeira','processador de alimentos','mixer','cafeteira','maquina de cafe','torradeira']},
-  {cat:'Eletrodomésticos',sub:'Aspiração e Limpeza',taxC:11,taxP:16,keys:['aspirador de po','robo aspirador','lavadora de alta pressao']},
-  {cat:'Casa, Móveis e Decoração',sub:'Sofás e Poltronas',taxC:12,taxP:17,keys:['sofa','poltrona','loveseat','chaise','sofa cama']},
-  {cat:'Casa, Móveis e Decoração',sub:'Camas e Colchões',taxC:12,taxP:17,keys:['colchao','cama','cabeceira','estrado','bicama','cama box']},
-  {cat:'Casa, Móveis e Decoração',sub:'Armários e Guarda-Roupas',taxC:12,taxP:17,keys:['guarda-roupa','armario','closet','roupeiro']},
-  {cat:'Casa, Móveis e Decoração',sub:'Mesas e Cadeiras',taxC:12,taxP:17,keys:['mesa de jantar','cadeira','mesa escritorio','mesa de centro','banqueta','mesa dobravel']},
-  {cat:'Casa, Móveis e Decoração',sub:'Decoração',taxC:14,taxP:19,keys:['quadro decorativo','espelho','luminaria','abajur','vaso decorativo','tapete','cortina','almofada']},
-  {cat:'Casa, Móveis e Decoração',sub:'Utilidades Domésticas',taxC:14,taxP:19,keys:['jogo de panelas','frigideira','chaleira','conjunto de facas','talheres','panela de pressao']},
-  {cat:'Esportes e Fitness',sub:'Musculação e Fitness',taxC:12,taxP:17,keys:['haltere','barra musculacao','anilha','kettlebell','banco musculacao','esteira','bicicleta ergometrica','corda de pular']},
-  {cat:'Esportes e Fitness',sub:'Bicicletas',taxC:12,taxP:17,keys:['bicicleta','bike','mtb','speed','bicicleta eletrica','patinete','skate','patins']},
-  {cat:'Esportes e Fitness',sub:'Futebol',taxC:12,taxP:17,keys:['bola de futebol','chuteira','caneleira','camisa futebol','trave']},
-  {cat:'Esportes e Fitness',sub:'Natação e Praia',taxC:12,taxP:17,keys:['oculos de natacao','maio','sunga','prancha de surf','snorkel']},
-  {cat:'Ferramentas e Construção',sub:'Ferramentas Elétricas',taxC:12,taxP:17,keys:['furadeira','parafusadeira','makita','dewalt','bosch','serra circular','esmerilhadeira','lixadeira','compressor']},
-  {cat:'Ferramentas e Construção',sub:'Ferramentas Manuais',taxC:12,taxP:17,keys:['martelo','chave de fenda','alicate','chave inglesa','nivel','fita metrica','trena','serrote']},
-  {cat:'Ferramentas e Construção',sub:'Materiais Elétricos',taxC:12,taxP:17,keys:['disjuntor','tomada','interruptor','fio eletrico','lampada led','luminaria led','fita led']},
-  {cat:'Ferramentas e Construção',sub:'Tintas e Pinturas',taxC:12,taxP:17,keys:['tinta parede','rolo de pintura','pincel','verniz','textura acrilica','primer']},
-  {cat:'Acessórios para Veículos',sub:'Acessórios para Carros',taxC:14,taxP:19,keys:['tapete automotivo','capa banco','volante esportivo','suporte veicular','carregador veicular','camera de re']},
+  {cat:'Eletrodomésticos',sub:'Lavagem e Secagem',taxC:11,taxP:16,keys:['maquina de lavar','lava e seca','lava-loucas','centrifuga','tanquinho','secadora de roupas']},
+  {cat:'Eletrodomésticos',sub:'Climatização',taxC:11,taxP:16,keys:['ar condicionado','ventilador','climatizador','purificador de ar','umidificador','aquecedor','split']},
+  {cat:'Eletrodomésticos',sub:'Pequenos Eletrodomésticos',taxC:11,taxP:16,keys:['liquidificador','batedeira','processador de alimentos','mixer','cafeteira','maquina de cafe','torradeira','sanduicheira']},
+  {cat:'Eletrodomésticos',sub:'Aspiração e Limpeza',taxC:11,taxP:16,keys:['aspirador de po','robo aspirador','lavadora de alta pressao','vassoura eletrica']},
+  {cat:'Casa, Móveis e Decoração',sub:'Sofás e Poltronas',taxC:11,taxP:16,keys:['sofa','poltrona','loveseat','chaise','sofa cama','puff']},
+  {cat:'Casa, Móveis e Decoração',sub:'Camas e Colchões',taxC:11,taxP:16,keys:['colchao','cama','cabeceira','estrado','bicama','cama box','beliche']},
+  {cat:'Casa, Móveis e Decoração',sub:'Armários e Guarda-Roupas',taxC:11,taxP:16,keys:['guarda-roupa','armario','closet','roupeiro']},
+  {cat:'Casa, Móveis e Decoração',sub:'Mesas e Cadeiras',taxC:11,taxP:16,keys:['mesa de jantar','cadeira','mesa escritorio','mesa de centro','banqueta','mesa dobravel','escrivaninha']},
+  {cat:'Casa, Móveis e Decoração',sub:'Estantes e Racks',taxC:11,taxP:16,keys:['estante','rack','prateleira','nicho','sapateira','aparador','cristaleira']},
+  {cat:'Casa, Móveis e Decoração',sub:'Decoração',taxC:11,taxP:16,keys:['quadro decorativo','espelho','luminaria','abajur','vaso decorativo','tapete','cortina','almofada','porta-retrato']},
+  {cat:'Casa, Móveis e Decoração',sub:'Cama, Mesa e Banho',taxC:11,taxP:16,keys:['jogo de cama','roupa de cama','toalha','edredom','cobertor','travesseiro']},
+  {cat:'Casa, Móveis e Decoração',sub:'Utilidades Domésticas',taxC:11,taxP:16,keys:['jogo de panelas','frigideira','chaleira','conjunto de facas','talheres','panela de pressao','forma de bolo']},
+  {cat:'Ferramentas e Construção',sub:'Ferramentas Elétricas',taxC:11,taxP:16,keys:['furadeira','parafusadeira','makita','dewalt','bosch','black decker','serra circular','esmerilhadeira','lixadeira','compressor','martelete']},
+  {cat:'Ferramentas e Construção',sub:'Ferramentas Manuais',taxC:11,taxP:16,keys:['martelo','chave de fenda','alicate','chave inglesa','nivel','fita metrica','trena','serrote']},
+  {cat:'Ferramentas e Construção',sub:'Materiais Elétricos',taxC:11,taxP:16,keys:['disjuntor','tomada','interruptor','fio eletrico','lampada led','luminaria led','fita led','cabo eletrico']},
+  {cat:'Ferramentas e Construção',sub:'Tintas e Acabamentos',taxC:11,taxP:16,keys:['tinta parede','rolo de pintura','pincel','verniz','textura acrilica','primer','selador','fita crepe']},
+  {cat:'Ferramentas e Construção',sub:'Hidráulica',taxC:11,taxP:16,keys:['cano pvc','conexao hidraulica','registro','torneira','chuveiro','caixa dagua','valvula']},
+  {cat:'Esportes e Fitness',sub:'Musculação e Fitness',taxC:14,taxP:19,keys:['haltere','barra musculacao','anilha','kettlebell','banco musculacao','esteira','bicicleta ergometrica','corda de pular','elastico']},
+  {cat:'Esportes e Fitness',sub:'Bicicletas e Ciclismo',taxC:14,taxP:19,keys:['bicicleta','bike','mtb','speed','bicicleta eletrica','patinete','skate','patins','capacete bike']},
+  {cat:'Esportes e Fitness',sub:'Futebol',taxC:14,taxP:19,keys:['bola de futebol','chuteira','caneleira','camisa futebol','trave']},
+  {cat:'Esportes e Fitness',sub:'Natação e Aquático',taxC:14,taxP:19,keys:['oculos de natacao','maio','sunga','prancha de surf','snorkel','boia']},
+  {cat:'Esportes e Fitness',sub:'Artes Marciais',taxC:14,taxP:19,keys:['kimono','luva boxe','protetor bucal','saco de pancada','tatame','bjj','muay thai','mma']},
+  {cat:'Esportes e Fitness',sub:'Camping e Aventura',taxC:14,taxP:19,keys:['barraca camping','saco de dormir','mochila trilha','lanterna','canivete']},
+  {cat:'Esportes e Fitness',sub:'Vestuário Esportivo',taxC:14,taxP:19,keys:['camiseta esportiva','shorts academia','top fitness','calca legging','tenis academia']},
+  {cat:'Acessórios para Veículos',sub:'Acessórios para Carros',taxC:12,taxP:17,keys:['tapete automotivo','capa banco','volante esportivo','suporte veicular','carregador veicular','camera de re','sensor de estacionamento']},
+  {cat:'Acessórios para Veículos',sub:'Som Automotivo',taxC:14,taxP:19,keys:['som automotivo','radio automotivo','subwoofer carro','auto radio','alto falante carro']},
   {cat:'Carros, Motos e Outros',sub:'Peças Automotivas',taxC:14,taxP:19,keys:['filtro de oleo','filtro de ar','vela ignicao','pastilha freio','amortecedor','bateria carro','farol']},
   {cat:'Carros, Motos e Outros',sub:'Pneus',taxC:14,taxP:19,keys:['pneu','pneu carro','pneu moto','aro 15','aro 17','pirelli','michelin','bridgestone']},
-  {cat:'Bebês',sub:'Carrinhos e Berços',taxC:14,taxP:19,keys:['carrinho de bebe','berco','bercinho','moises']},
+  {cat:'Bebês',sub:'Carrinho e Berço',taxC:14,taxP:19,keys:['carrinho de bebe','berco','bercinho','moises']},
   {cat:'Bebês',sub:'Alimentação do Bebê',taxC:14,taxP:19,keys:['mamadeira','chupeta','prato de bebe','colher bebe','esterilizador']},
-  {cat:'Bebês',sub:'Fraldas e Higiene',taxC:11,taxP:16,keys:['fralda','lenco umedecido','shampoo bebe','talco','creme fralda']},
-  {cat:'Brinquedos e Hobbies',sub:'Bonecas e Pelúcias',taxC:14,taxP:19,keys:['boneca','pelucia','urso de pelucia','barbie','bebe reborn']},
-  {cat:'Brinquedos e Hobbies',sub:'Carrinhos e Veículos',taxC:14,taxP:19,keys:['carrinho de brinquedo','hot wheels','miniatura carro','controle remoto carro']},
-  {cat:'Brinquedos e Hobbies',sub:'Jogos de Tabuleiro',taxC:14,taxP:19,keys:['jogo de tabuleiro','quebra-cabeca','xadrez','dama','monopoly']},
-  {cat:'Brinquedos e Hobbies',sub:'Construção e Blocos',taxC:14,taxP:19,keys:['lego','blocos de montar','duplo','playmobil']},
-  {cat:'Games',sub:'Consoles',taxC:11,taxP:16,keys:['playstation 5','ps5','xbox series','nintendo switch','ps4','xbox one']},
-  {cat:'Games',sub:'Jogos para Console',taxC:11,taxP:16,keys:['jogo ps5','jogo xbox','jogo nintendo','jogo ps4','call of duty','fifa']},
-  {cat:'Games',sub:'Periféricos Gamer',taxC:13,taxP:18,keys:['controle ps5','controle xbox','headset gamer','mouse gamer','teclado gamer','cadeira gamer']},
-  {cat:'Alimentos e Bebidas',sub:'Suplementos',taxC:11,taxP:16,keys:['whey protein','creatina','bcaa','pre treino','hipercalorico','proteina em po']},
-  {cat:'Alimentos e Bebidas',sub:'Alimentos Naturais',taxC:11,taxP:16,keys:['granola','castanha','aveia','oleo de coco','mel','pasta de amendoim']},
-  {cat:'Saúde',sub:'Equipamentos Médicos',taxC:13,taxP:18,keys:['aparelho de pressao','oximetro','termometro','nebulizador','glicosimetro']},
-  {cat:'Animais',sub:'Rações',taxC:11,taxP:16,keys:['racao cachorro','racao gato','racao pet','petisco cachorro','petisco gato']},
-  {cat:'Animais',sub:'Acessórios para Pets',taxC:14,taxP:19,keys:['coleira','guia','arranhador','caixa transporte','cama pet','roupa cachorro']},
-  {cat:'Livros, Revistas e Comics',sub:'Livros',taxC:11,taxP:16,keys:['livro','romance','thriller','autoajuda','biografia','apostila']},
-  {cat:'Arte, Papelaria e Armarinho',sub:'Material Escolar',taxC:13,taxP:18,keys:['caderno','mochila escolar','lapis','caneta','borracha','estojo','calculadora']},
-  {cat:'Arte, Papelaria e Armarinho',sub:'Artesanato',taxC:13,taxP:18,keys:['tinta acrilica','pincel artistico','tela para pintura','argila','croche','fio de malha']},
+  {cat:'Bebês',sub:'Fraldas e Higiene',taxC:11,taxP:16,keys:['fralda','lenco umedecido','shampoo bebe','talco bebe','creme fralda']},
+  {cat:'Bebês',sub:'Roupas de Bebê',taxC:14,taxP:19,keys:['body bebe','roupa bebe','macacao bebe','enxoval bebe']},
+  {cat:'Brinquedos e Hobbies',sub:'Bonecas e Pelúcias',taxC:11,taxP:16,keys:['boneca','pelucia','urso de pelucia','barbie','bebe reborn']},
+  {cat:'Brinquedos e Hobbies',sub:'Carrinhos e Veículos',taxC:11,taxP:16,keys:['carrinho de brinquedo','hot wheels','miniatura carro','controle remoto carro']},
+  {cat:'Brinquedos e Hobbies',sub:'Jogos de Tabuleiro',taxC:11,taxP:16,keys:['jogo de tabuleiro','quebra-cabeca','xadrez','dama','monopoly','jogo de cartas','uno']},
+  {cat:'Brinquedos e Hobbies',sub:'Construção e Blocos',taxC:11,taxP:16,keys:['lego','blocos de montar','duplo','playmobil']},
+  {cat:'Brinquedos e Hobbies',sub:'Hobbies e Colecionáveis',taxC:11,taxP:16,keys:['miniatura colecionavel','funko pop','figura de acao','card pokemon','yugioh','magic','puzzle 3d']},
+  {cat:'Games',sub:'Consoles',taxC:13,taxP:18,keys:['playstation 5','ps5','xbox series','nintendo switch','ps4','xbox one']},
+  {cat:'Games',sub:'Jogos para Console',taxC:13,taxP:18,keys:['jogo ps5','jogo xbox','jogo nintendo','jogo ps4','call of duty','fifa','gta','zelda','mario']},
+  {cat:'Games',sub:'Periféricos Gamer',taxC:13,taxP:18,keys:['controle ps5','controle xbox','headset gamer','mouse gamer','teclado gamer','cadeira gamer','mousepad gamer']},
+  {cat:'Alimentos e Bebidas',sub:'Suplementos e Proteínas',taxC:11,taxP:16,keys:['whey protein','creatina','bcaa','pre treino','hipercalorico','proteina em po','albumina','colageno']},
+  {cat:'Alimentos e Bebidas',sub:'Alimentos Naturais',taxC:11,taxP:16,keys:['granola','castanha','aveia','oleo de coco','mel','pasta de amendoim','chia']},
+  {cat:'Alimentos e Bebidas',sub:'Bebidas',taxC:14,taxP:19,keys:['cafe gourmet','cha','suco','energetico','cerveja artesanal','vinho','whisky','kombucha']},
+  {cat:'Alimentos e Bebidas',sub:'Chocolates e Doces',taxC:14,taxP:19,keys:['chocolate','caixa de chocolate','brigadeiro','bala','marshmallow','trufas','ferrero']},
+  {cat:'Supermercado',sub:'Higiene e Limpeza',taxC:11,taxP:16,keys:['detergente','sabao em po','amaciante','desinfetante','agua sanitaria','limpador multiuso','papel higienico','papel toalha']},
+  {cat:'Supermercado',sub:'Alimentos do Dia a Dia',taxC:11,taxP:16,keys:['arroz','feijao','macarrao','farinha','acucar','sal','oleo de soja','molho de tomate']},
+  {cat:'Pet Shop',sub:'Rações para Cães',taxC:12,taxP:17,keys:['racao cachorro','racao caes','petisco cachorro','snack cachorro','osso cachorro']},
+  {cat:'Pet Shop',sub:'Rações para Gatos',taxC:12,taxP:17,keys:['racao gato','petisco gato','snack gato','sache gato']},
+  {cat:'Pet Shop',sub:'Acessórios para Pets',taxC:12,taxP:17,keys:['coleira','guia','arranhador','caixa transporte','cama pet','roupa cachorro','brinquedo pet','aquario','comedouro']},
+  {cat:'Saúde',sub:'Equipamentos Médicos',taxC:12,taxP:17,keys:['aparelho de pressao','oximetro','termometro','nebulizador','glicosimetro','balanca digital']},
+  {cat:'Saúde',sub:'Cuidados com o Corpo',taxC:12,taxP:17,keys:['repelente','protetor labial','curativo','atadura','bolsa termica','suporte ortopedico','palmilha']},
+  {cat:'Saúde',sub:'Vitaminas e Suplementos',taxC:12,taxP:17,keys:['vitamina c','vitamina d','omega 3','zinco','magnesio','probiotico','multivitaminico']},
+  {cat:'Festas e Lembrancinhas',sub:'Decoração de Festas',taxC:11,taxP:16,keys:['balao','bexiga','enfeite festa','banner festa','toalha descartavel','copo descartavel','kit festa']},
+  {cat:'Festas e Lembrancinhas',sub:'Lembrancinhas',taxC:11,taxP:16,keys:['lembrancinha','brinde','caixinha lembrancinha','potinho lembrancinha']},
+  {cat:'Festas e Lembrancinhas',sub:'Fantasias',taxC:11,taxP:16,keys:['fantasia adulto','fantasia infantil','peruca','mascara festa','chapeu de festa']},
+  {cat:'Instrumentos Musicais',sub:'Cordas',taxC:11,taxP:16,keys:['violao','guitarra','cavaquinho','ukulele','baixo eletrico','violino','corda de violao','palheta']},
+  {cat:'Instrumentos Musicais',sub:'Teclados e Pianos',taxC:11,taxP:16,keys:['teclado musical','piano digital','orgao','sintetizador','midi']},
+  {cat:'Instrumentos Musicais',sub:'Percussão',taxC:11,taxP:16,keys:['bateria','pandeiro','cajon','djembe','baqueta','tamborim']},
+  {cat:'Instrumentos Musicais',sub:'Sopro',taxC:11,taxP:16,keys:['flauta','saxofone','clarinete','trompete','harmonica','gaita','trombone']},
+  {cat:'Instrumentos Musicais',sub:'Equipamento de Som e DJ',taxC:11,taxP:16,keys:['mesa de som','controlador dj','interface de audio','microfone','amplificador guitarra','cubo violao']},
+  {cat:'Música, Filmes e Seriados',sub:'Vinil, CDs e DVDs',taxC:12,taxP:17,keys:['disco de vinil','lp vinil','cd original','dvd','blu-ray','colecao dvd','toca-discos','vitrola']},
+  {cat:'Antiguidades e Coleções',sub:'Antiguidades e Objetos de Época',taxC:11,taxP:16,keys:['antiguidade','objeto antigo','vintage','retro','mobilia antiga','ceramica antiga','porcelana antiga','antigo','pecas antigas']},
+  {cat:'Antiguidades e Coleções',sub:'Moedas e Selos',taxC:11,taxP:16,keys:['moeda antiga','moeda colecionavel','moeda rara','cedula','nota antiga','selo postal','filatelia','numismatica']},
+  {cat:'Antiguidades e Coleções',sub:'Cards e Figurinhas',taxC:11,taxP:16,keys:['card pokemon','figurinha colecionavel','album figurinha','card magic','yugioh card','card colecionavel','graded card','psa']},
+  {cat:'Arte, Papelaria e Armarinho',sub:'Material Escolar',taxC:11,taxP:16,keys:['caderno','lapis','caneta','borracha','estojo','regua','calculadora','mochila escolar']},
+  {cat:'Arte, Papelaria e Armarinho',sub:'Materiais de Arte',taxC:11,taxP:16,keys:['tinta acrilica','pincel artistico','tela para pintura','argila','aquarela','giz pastel']},
+  {cat:'Arte, Papelaria e Armarinho',sub:'Artesanato e DIY',taxC:11,taxP:16,keys:['croche','fio de malha','trico','bordado','costura','tecido','eva','glitter','cola quente']},
+  {cat:'Livros, Revistas e Comics',sub:'Literatura e Ficção',taxC:12,taxP:17,keys:['romance','livro ficao','thriller','fantasia','ficcao cientifica','terror livro']},
+  {cat:'Livros, Revistas e Comics',sub:'Autoajuda e Negócios',taxC:12,taxP:17,keys:['autoajuda','desenvolvimento pessoal','livro motivacional','lideranca','financas pessoais','empreendedorismo']},
+  {cat:'Livros, Revistas e Comics',sub:'Técnicos e Acadêmicos',taxC:12,taxP:17,keys:['livro tecnico','livro medicina','livro direito','apostila','concurso','vestibular']},
+  {cat:'Livros, Revistas e Comics',sub:'Infantil e Quadrinhos',taxC:12,taxP:17,keys:['livro infantil','historia infantil','gibi','manga','hq','comics','quadrinhos']},
+  {cat:'Agro',sub:'Ferramentas Agrícolas',taxC:11,taxP:16,keys:['enxada','foice','rastelo','pa','machado','podador','rocadeira','moto poda']},
+  {cat:'Agro',sub:'Sementes, Mudas e Jardim',taxC:11,taxP:16,keys:['semente','muda planta','bulbo','adubo','fertilizante','substrato','terra vegetal','vaso planta','mangueira jardim','aspersor']},
+  {cat:'Indústria e Comércio',sub:'Segurança do Trabalho',taxC:12,taxP:17,keys:['epi','capacete seguranca','bota seguranca','luva trabalho','oculos protecao','cinto paraquedista','colete refletivo']},
+  {cat:'Indústria e Comércio',sub:'Embalagens e Expedição',taxC:12,taxP:17,keys:['caixa papelao','fita adesiva','plastico bolha','etiqueta','sacola plastica','envelope bolha']},
+  {cat:'Indústria e Comércio',sub:'Equipamentos para Negócios',taxC:12,taxP:17,keys:['maquininha cartao','pos','impressora termica','balanca comercial','caixa registradora','leitor codigo de barras']},
+  {cat:'Ingressos',sub:'Ingressos e Vouchers',taxC:11,taxP:16,keys:['ingresso show','voucher','ticket evento','ingresso teatro','ingresso cinema','ingresso parque']},
 ];
 
 const SHOPEE_FAIXAS=[
   {min:0,max:7.99,pct:50,fixo:0,label:'Faixa 1 — até R$7,99',cor:'#A32D2D'},
-  {min:8,max:79.99,pct:20,fixo:4,label:'Faixa 2 — R$8,00 a R$79,99',cor:'#7B2200'},
-  {min:80,max:99.99,pct:14,fixo:16,label:'Faixa 3 — R$80,00 a R$99,99',cor:'#854F0B'},
-  {min:100,max:199.99,pct:14,fixo:20,label:'Faixa 4 — R$100,00 a R$199,99',cor:'#3B6D11'},
-  {min:200,max:499.99,pct:14,fixo:26,label:'Faixa 5 — R$200,00 a R$499,99',cor:'#7B4F00'},
-  {min:500,max:Infinity,pct:14,fixo:26,label:'Faixa 6 — acima de R$500,00',cor:'#3C3489'},
+  {min:8,max:79.99,pct:20,fixo:4,label:'Faixa 2 — R$8 a R$79,99',cor:'#7B2200'},
+  {min:80,max:99.99,pct:14,fixo:16,label:'Faixa 3 — R$80 a R$99,99',cor:'#854F0B'},
+  {min:100,max:199.99,pct:14,fixo:20,label:'Faixa 4 — R$100 a R$199,99',cor:'#3B6D11'},
+  {min:200,max:499.99,pct:14,fixo:26,label:'Faixa 5 — R$200 a R$499,99',cor:'#7B4F00'},
+  {min:500,max:Infinity,pct:14,fixo:26,label:'Faixa 6 — acima de R$500',cor:'#3C3489'},
 ];
 
-let selectedCat=null,lastCalc=null,activeIdx=-1,filteredList=[],platform='ml',mlPlan='premium';
-
-const THEMES={ml:{hc:'ml',title:'Calculadora Mercado Livre',sub:'Precificação com taxas oficiais ML 2026'},shopee:{hc:'shopee',title:'Calculadora Shopee',sub:'Precificação com taxas oficiais Shopee 2026'},both:{hc:'both',title:'Comparativo ML × Shopee',sub:'Compare lucros nas duas plataformas'}};
+let selectedCat=null, mlPlan='premium', lastCalc=null, activeIdx=-1, filteredList=[];
 
 function normalize(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
 function getShopeeFaixa(p){return SHOPEE_FAIXAS.find(f=>p>=f.min&&p<=f.max)||SHOPEE_FAIXAS[SHOPEE_FAIXAS.length-1];}
@@ -527,43 +375,27 @@ function getMLFixedFee(p){if(p<=0)return 0;if(p<=12.5)return p*0.5;if(p<=20)retu
 function fmt(v){return'R$ '+v.toFixed(2).replace('.',',').replace(/\B(?=(\d{3})+(?!\d))/g,'.');}
 function fmtP(v){return v.toFixed(1).replace('.',',')+'%';}
 
-function setPlatform(p){
-  platform=p;
-  ['ml','shopee','both'].forEach(x=>document.getElementById('tab-'+x).className='ptab'+(p===x?' a'+x:''));
-  const t=THEMES[p];
-  document.getElementById('headerBar').className='header-bar '+t.hc;
-  document.getElementById('headerTitle').textContent=t.title;
-  document.getElementById('headerSub').textContent=t.sub;
-  document.getElementById('sectionML').style.display=(p==='ml'||p==='both')?'block':'none';
-  calculate();
-}
-
-function selectMLPlan(plan){
-  mlPlan=plan;
-  document.getElementById('planC').className='plan-card'+(plan==='classico'?' sml':'');
-  document.getElementById('planP').className='plan-card'+(plan==='premium'?' sml':'');
-  const ckC=document.getElementById('ckC'),ckP=document.getElementById('ckP');
-  ckC.style.background=plan==='classico'?'#FFB300':'transparent';ckC.style.borderColor=plan==='classico'?'#FFB300':'';ckC.innerHTML=plan==='classico'?'<i class="ti ti-check" style="font-size:9px;color:#fff;"></i>':'';
-  ckP.style.background=plan==='premium'?'#FFB300':'transparent';ckP.style.borderColor=plan==='premium'?'#FFB300':'';ckP.innerHTML=plan==='premium'?'<i class="ti ti-check" style="font-size:9px;color:#fff;"></i>':'';
-  onCostChange();
-}
-
 function tooltipML(taxC,taxP,sub){
-  return`<div class="tip-box"><div class="tip-title">Taxas ML — ${sub}</div>
-  <div class="tip-row"><span>Plano Clássico</span><span style="font-weight:500;color:#E65C00;">${taxC}%</span></div>
-  <div class="tip-row"><span>Plano Premium</span><span style="font-weight:500;color:#E65C00;">${taxP}%</span></div>
-  <div class="tip-row"><span>Custo fixo até R$12,50</span><span>50% do preço</span></div>
-  <div class="tip-row"><span>Custo fixo R$12,51–R$20</span><span>R$5,50</span></div>
-  <div class="tip-row"><span>Custo fixo R$20,01–R$50</span><span>R$6,00</span></div>
-  <div class="tip-row"><span>Custo fixo R$50–R$78,99</span><span>R$6,75</span></div>
-  <div class="tip-row"><span>Acima de R$79</span><span>Frete por peso</span></div>
-  <div style="font-size:10px;color:var(--text2);margin-top:5px;">Comissão incide sobre o valor de venda. Custo fixo adicional em produtos abaixo de R$79.</div></div>`;}
+  return`<div class="tip-box">
+    <div class="tip-title">Taxas ML — ${sub}</div>
+    <div class="tip-row"><span>Plano Clássico</span><span style="font-weight:500;color:#E65C00;">${taxC}%</span></div>
+    <div class="tip-row"><span>Plano Premium</span><span style="font-weight:500;color:#E65C00;">${taxP}%</span></div>
+    <div class="tip-row"><span>Custo fixo até R$12,50</span><span>50% do preço</span></div>
+    <div class="tip-row"><span>Custo fixo R$12,51–R$20</span><span>R$5,50</span></div>
+    <div class="tip-row"><span>Custo fixo R$20,01–R$50</span><span>R$6,00</span></div>
+    <div class="tip-row"><span>Custo fixo R$50–R$78,99</span><span>R$6,75</span></div>
+    <div class="tip-row"><span>Acima de R$79</span><span>Frete por peso (obrig.)</span></div>
+    <div style="font-size:10px;color:var(--text2);margin-top:5px;">Comissão sobre o valor de venda. Custo fixo adicional para produtos abaixo de R$79.</div>
+  </div>`;}
 
 function tooltipSP(){
-  return`<div class="tip-box"><div class="tip-title">Taxas Shopee — por faixa de preço</div>
-  ${SHOPEE_FAIXAS.map(f=>`<div class="tip-row"><span>${f.label}</span><span style="font-weight:500;color:#FF6D3B;">${f.pct}%+R$${f.fixo}</span></div>`).join('')}
-  <div style="font-size:10px;color:var(--text2);margin-top:5px;">Frete grátis obrigatório. Shopee subsidia até R$20. Vigência: 01/03/2026.</div></div>`;}
+  return`<div class="tip-box">
+    <div class="tip-title">Taxas Shopee — por faixa de preço</div>
+    ${SHOPEE_FAIXAS.map(f=>`<div class="tip-row"><span>${f.label}</span><span style="font-weight:500;color:#FF6D3B;">${f.pct}%+R$${f.fixo}</span></div>`).join('')}
+    <div style="font-size:10px;color:var(--text2);margin-top:5px;">Frete grátis obrigatório desde mar/2026. Shopee subsidia até R$20.</div>
+  </div>`;}
 
+// BUSCA
 function onSearch(val){
   const q=normalize(val.trim());
   if(q.length<2){closeDropdown();return;}
@@ -572,25 +404,40 @@ function onSearch(val){
     let best=0;
     c.keys.forEach(k=>{const nk=normalize(k);if(nk===q)best=Math.max(best,100);else if(nk.startsWith(q))best=Math.max(best,80);else if(q.split(' ').every(w=>nk.includes(w)))best=Math.max(best,60);else if(nk.includes(q)||q.includes(nk.split(' ')[0]))best=Math.max(best,40);});
     if(normalize(c.sub).includes(q)||q.includes(normalize(c.sub).split(' ')[0]))best=Math.max(best,50);
+    if(normalize(c.cat).includes(q))best=Math.max(best,30);
     if(best>0)scored.push({score:best,idx:i});
   });
   scored.sort((a,b)=>b.score-a.score);
-  filteredList=scored.slice(0,8).map(s=>s.idx);
+  filteredList=scored.slice(0,10).map(s=>s.idx);
   if(!filteredList.length){closeDropdown();return;}
   const dd=document.getElementById('dropDown');
-  dd.innerHTML=filteredList.map((i,pos)=>{const c=CATS[i];return`<div class="drop-item" id="di-${pos}" onclick="selectFromDrop(${i})" onmouseover="activeIdx=${pos};highlightDrop()"><div><strong>${c.sub}</strong><div class="di-path">${c.cat}</div></div><span class="tag tag-ml">ML ${c.taxP}%</span></div>`;}).join('');
+  dd.innerHTML=filteredList.map((i,pos)=>{
+    const c=CATS[i];
+    return`<div class="drop-item" id="di-${pos}" onclick="selectFromDrop(${i})" onmouseover="activeIdx=${pos};highlightDrop()">
+      <div><strong>${c.sub}</strong><div class="di-path">${c.cat}</div></div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;">
+        <span class="tag tag-ml">ML ${c.taxP}%</span>
+      </div>
+    </div>`;
+  }).join('');
   dd.classList.add('show');activeIdx=-1;
 }
-
-function highlightDrop(){document.querySelectorAll('.drop-item').forEach((el,i)=>{el.classList.toggle('active',i===activeIdx);});}
-function onKey(e){if(e.key==='ArrowDown'){activeIdx=Math.min(activeIdx+1,filteredList.length-1);highlightDrop();e.preventDefault();}else if(e.key==='ArrowUp'){activeIdx=Math.max(activeIdx-1,0);highlightDrop();e.preventDefault();}else if(e.key==='Enter'){if(activeIdx>=0&&filteredList[activeIdx]!==undefined)selectFromDrop(filteredList[activeIdx]);else doSearch();}else if(e.key==='Escape')closeDropdown();}
+function highlightDrop(){document.querySelectorAll('.drop-item').forEach((el,i)=>el.classList.toggle('active',i===activeIdx));}
+function onKey(e){
+  if(e.key==='ArrowDown'){activeIdx=Math.min(activeIdx+1,filteredList.length-1);highlightDrop();e.preventDefault();}
+  else if(e.key==='ArrowUp'){activeIdx=Math.max(activeIdx-1,0);highlightDrop();e.preventDefault();}
+  else if(e.key==='Enter'){if(activeIdx>=0&&filteredList[activeIdx]!==undefined)selectFromDrop(filteredList[activeIdx]);else doSearch();}
+  else if(e.key==='Escape')closeDropdown();
+}
 function closeDropdown(){document.getElementById('dropDown').classList.remove('show');}
 
 function selectFromDrop(idx){
   selectedCat=CATS[idx];
   document.getElementById('searchInput').value=selectedCat.sub;
-  closeDropdown();showCatInfo();
-  document.getElementById('cardCalc').style.display='block';
+  closeDropdown();
+  showCatInfo();
+  document.getElementById('cardPlano').style.display='block';
+  document.getElementById('cardDados').style.display='block';
   onCostChange();
 }
 
@@ -605,7 +452,11 @@ function doSearch(){
     if(score>bestScore){bestScore=score;best=i;}
   });
   if(best!==null)selectFromDrop(best);
-  else{const el=document.getElementById('selectedCatInfo');el.style.display='block';el.innerHTML=`<div class="alert alert-amb"><i class="ti ti-alert-triangle" style="font-size:13px;flex-shrink:0;"></i><span>Produto não identificado. Tente palavras mais específicas.</span></div>`;}
+  else{
+    const el=document.getElementById('selectedCatInfo');
+    el.style.display='block';
+    el.innerHTML=`<div class="alert alert-amb"><i class="ti ti-alert-triangle" style="font-size:13px;flex-shrink:0;"></i><span>Produto não identificado. Tente: "antiguidade", "violão", "ração", "semente", "pneu"...</span></div>`;
+  }
   closeDropdown();
 }
 
@@ -614,34 +465,47 @@ function showCatInfo(){
   const c=selectedCat;
   document.getElementById('feeC').textContent=c.taxC+'%';
   document.getElementById('feeP').textContent=c.taxP+'%';
-  document.getElementById('selectedCatInfo').style.display='block';
-  document.getElementById('selectedCatInfo').innerHTML=`
+  const el=document.getElementById('selectedCatInfo');
+  el.style.display='block';
+  el.innerHTML=`
     <div style="background:var(--bg2);border-radius:var(--radius-md);padding:.75rem 1rem;">
-      <div style="font-size:11px;color:var(--text2);margin-bottom:4px;"><i class="ti ti-check" style="color:#3B6D11;"></i> Categoria identificada</div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:3px;display:flex;align-items:center;gap:5px;"><i class="ti ti-check" style="color:#3B6D11;font-size:13px;"></i> Categoria identificada</div>
       <div style="font-size:14px;font-weight:500;">${c.sub}</div>
-      <div style="font-size:11px;color:var(--text2);margin-bottom:10px;">${c.cat}</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div style="font-size:11px;color:var(--text2);margin-bottom:8px;">${c.cat}</div>
+      <div class="taxa-boxes">
         <div class="taxa-box ml">
-          <div class="taxa-label ml">Mercado Livre <div class="tip-wrap"><button class="tip-icon" aria-label="Info ML">!</button>${tooltipML(c.taxC,c.taxP,c.sub)}</div></div>
+          <div class="taxa-label ml">Mercado Livre <div class="tip-wrap"><button class="tip-icon ml" aria-label="Info ML">!</button>${tooltipML(c.taxC,c.taxP,c.sub)}</div></div>
           <div style="display:flex;gap:8px;margin-top:2px;">
-            <div><div style="font-size:9px;color:var(--text2);">Clássico</div><div class="taxa-val ml" style="font-size:16px;">${c.taxC}%</div></div>
+            <div><div style="font-size:9px;color:var(--text2);">Clássico</div><div style="font-size:16px;font-weight:500;color:#E65C00;">${c.taxC}%</div></div>
             <div style="width:0.5px;background:var(--border);"></div>
-            <div><div style="font-size:9px;color:var(--text2);">Premium</div><div class="taxa-val ml" style="font-size:16px;">${c.taxP}%</div></div>
+            <div><div style="font-size:9px;color:var(--text2);">Premium</div><div style="font-size:16px;font-weight:500;color:#E65C00;">${c.taxP}%</div></div>
           </div>
-          <div class="taxa-sub">+ custo fixo para produtos &lt; R$79</div>
+          <div class="taxa-sub">+ custo fixo produtos &lt; R$79</div>
         </div>
         <div class="taxa-box sp">
           <div class="taxa-label sp">Shopee <div class="tip-wrap"><button class="tip-icon sp" aria-label="Info Shopee">!</button>${tooltipSP()}</div></div>
-          <div class="taxa-val sp" style="font-size:13px;">Por faixa de preço</div>
+          <div style="font-size:13px;font-weight:500;color:#FF6D3B;">Por faixa de preço</div>
           <div class="taxa-sub">F2: 20%+R$4 · F3: 14%+R$16 · F4: 14%+R$20</div>
         </div>
       </div>
     </div>`;
 }
 
-function onCostChange(){updateFreteSection();calculate();}
+function selectPlan(plan){
+  mlPlan=plan;
+  document.getElementById('planC').className='plan-card'+(plan==='classico'?' sel':'');
+  document.getElementById('planP').className='plan-card'+(plan==='premium'?' sel':'');
+  const ckC=document.getElementById('ckC'),ckP=document.getElementById('ckP');
+  ckC.style.background=plan==='classico'?'#FFB300':'transparent';ckC.style.borderColor=plan==='classico'?'#FFB300':'';
+  ckC.innerHTML=plan==='classico'?'<i class="ti ti-check" style="font-size:9px;color:#fff;"></i>':'';
+  ckP.style.background=plan==='premium'?'#FFB300':'transparent';ckP.style.borderColor=plan==='premium'?'#FFB300':'';
+  ckP.innerHTML=plan==='premium'?'<i class="ti ti-check" style="font-size:9px;color:#fff;"></i>':'';
+  onCostChange();
+}
 
-function updateFreteSection(){
+function onCostChange(){updateFrete();calculate();}
+
+function updateFrete(){
   const cost=parseFloat(document.getElementById('costPrice').value)||0;
   const marginP=parseFloat(document.getElementById('margin').value)||30;
   const taxP=parseFloat(document.getElementById('taxRate').value)||6;
@@ -653,18 +517,27 @@ function updateFreteSection(){
   const campo=document.getElementById('freteCampo');
   if(precoEst<79){
     info.style.display='block';info.className='frete-info gratis';
-    info.innerHTML=`<i class="ti ti-gift"></i> <strong>Preço estimado abaixo de R$79:</strong> ML cobre 100% do frete em produtos novos nesta faixa. Shopee: subsídio de R$20 normalmente cobre fretes padrão. Nenhum custo de frete no cálculo.`;
+    info.innerHTML=`<i class="ti ti-gift"></i> <strong>Preço estimado abaixo de R$79:</strong> ML cobre 100% do frete em produtos novos. Shopee: subsídio de R$20 normalmente cobre. Sem custo extra de frete no cálculo.`;
     campo.style.display='none';document.getElementById('freteCusto').value='';
   } else {
     info.style.display='block';info.className='frete-info cobrado';
-    info.innerHTML=`<i class="ti ti-truck"></i> <strong>Preço estimado acima de R$79:</strong> frete grátis obrigatório e por sua conta. Informe o custo da etiqueta abaixo.`;
+    info.innerHTML=`<i class="ti ti-truck"></i> <strong>Preço estimado acima de R$79:</strong> frete grátis obrigatório por sua conta. Informe o custo da etiqueta abaixo.`;
     campo.style.display='block';
   }
 }
 
-function iterML(cost,freteEx,taxP,marginP,mlFeeP){let p=100;for(let i=0;i<25;i++){const ff=getMLFixedFee(p);const d=1-(mlFeeP/100)-(taxP/100)-(marginP/100);if(d<=0)return null;const pn=(cost+freteEx+ff)/d;if(Math.abs(pn-p)<0.001)return pn;p=pn;}return p;}
-function iterSP(cost,freteEx,taxP,marginP){let p=50;for(let i=0;i<25;i++){const sf=getShopeeFaixa(p);const d=1-(sf.pct/100)-(taxP/100)-(marginP/100);if(d<=0)return null;const pn=(cost+freteEx+sf.fixo)/d;if(Math.abs(pn-p)<0.001)return pn;p=pn;}return p;}
-function checkZone(price){if(price>=79&&price<82)return{t:'red',m:'Preço próximo à transição F2→F3 na Shopee (R$80). Cruzar R$80 gera R$7,21 a mais em taxas!'};if(price>=99&&price<103)return{t:'amb',m:'Próximo à transição F3→F4 (R$100). Taxa fixa sobe R$4.'};if(price>=199&&price<204)return{t:'amb',m:'Próximo à transição F4→F5 (R$200). Taxa fixa sobe R$6.'};return null;}
+function iterML(cost,freteEx,taxP,marginP,mlFeeP){
+  let p=100;for(let i=0;i<25;i++){const ff=getMLFixedFee(p);const d=1-(mlFeeP/100)-(taxP/100)-(marginP/100);if(d<=0)return null;const pn=(cost+freteEx+ff)/d;if(Math.abs(pn-p)<0.001)return pn;p=pn;}return p;
+}
+function iterSP(cost,freteEx,taxP,marginP){
+  let p=50;for(let i=0;i<25;i++){const sf=getShopeeFaixa(p);const d=1-(sf.pct/100)-(taxP/100)-(marginP/100);if(d<=0)return null;const pn=(cost+freteEx+sf.fixo)/d;if(Math.abs(pn-p)<0.001)return pn;p=pn;}return p;
+}
+function checkZone(price){
+  if(price>=79&&price<82)return{t:'red',m:'Preço próximo à transição F2→F3 Shopee (R$80). Cruzar R$80 gera R$7,21 a mais em taxas!'};
+  if(price>=99&&price<103)return{t:'amb',m:'Próximo à transição F3→F4 (R$100). Taxa fixa sobe R$4.'};
+  if(price>=199&&price<204)return{t:'amb',m:'Próximo à transição F4→F5 (R$200). Taxa fixa sobe R$6.'};
+  return null;
+}
 
 function calculate(){
   if(!selectedCat)return;
@@ -676,34 +549,40 @@ function calculate(){
   const pdfBar=document.getElementById('pdfBar');
   lastCalc=null;
   if(cost<=0||marginP<=0){ra.innerHTML='';pdfBar.classList.remove('show');return;}
-  const freteCampoVisivel=document.getElementById('freteCampo').style.display!=='none';
-  const freteBruto=freteCampoVisivel?(parseFloat(document.getElementById('freteCusto').value)||0):0;
-  const freteExSP=freteCampoVisivel?Math.max(0,freteBruto-20):0;
+  const freteCampoVis=document.getElementById('freteCampo').style.display!=='none';
+  const freteBruto=freteCampoVis?(parseFloat(document.getElementById('freteCusto').value)||0):0;
+  const freteExSP=freteCampoVis?Math.max(0,freteBruto-20):0;
   const freteExML=freteBruto;
   const priceML=iterML(cost,freteExML,taxP,marginP,mlFeeP);
   const priceSP=iterSP(cost,freteExSP,taxP,marginP);
-  if(!priceML&&!priceSP){ra.innerHTML=`<div class="alert alert-red" style="margin-bottom:.75rem;"><i class="ti ti-alert-circle" style="font-size:13px;flex-shrink:0;"></i><span>Margem + taxas ultrapassam 100%. Reduza a margem.</span></div>`;pdfBar.classList.remove('show');return;}
+  if(!priceML&&!priceSP){
+    ra.innerHTML=`<div class="alert alert-red"><i class="ti ti-alert-circle" style="font-size:13px;flex-shrink:0;"></i><span>Margem + taxas ultrapassam 100%. Reduza a margem desejada.</span></div>`;
+    pdfBar.classList.remove('show');return;
+  }
   const fixML=priceML?getMLFixedFee(priceML):0;
-  const sfSP=priceSP?getShopeeFaixa(priceSP):{pct:20,fixo:4,label:'Faixa 2 — R$8,00 a R$79,99',cor:'#7B2200'};
-  const feeValML=priceML?priceML*mlFeeP/100:0,taxValML=priceML?priceML*taxP/100:0;
+  const sfSP=priceSP?getShopeeFaixa(priceSP):{pct:20,fixo:4,label:'Faixa 2 — R$8 a R$79,99',cor:'#7B2200'};
+  const feeValML=priceML?priceML*mlFeeP/100:0, taxValML=priceML?priceML*taxP/100:0;
   const profitML=priceML?(priceML-(cost+freteExML+fixML+feeValML+taxValML)):0;
-  const feeValSP=priceSP?priceSP*sfSP.pct/100:0,taxValSP=priceSP?priceSP*taxP/100:0;
+  const feeValSP=priceSP?priceSP*sfSP.pct/100:0, taxValSP=priceSP?priceSP*taxP/100:0;
   const profitSP=priceSP?(priceSP-(cost+freteExSP+sfSP.fixo+feeValSP+taxValSP)):0;
-  const realML=priceML?(profitML/priceML)*100:0,realSP=priceSP?(profitSP/priceSP)*100:0;
+  const realML=priceML?(profitML/priceML)*100:0, realSP=priceSP?(profitSP/priceSP)*100:0;
   const winner=priceML&&priceSP?(profitML>=profitSP?'ml':'shopee'):'none';
   const spAlert=priceSP?checkZone(priceSP):null;
   let alertHtml='';
-  if(spAlert)alertHtml=`<div class="alert alert-${spAlert.t}" style="margin-bottom:.75rem;"><i class="ti ti-alert-triangle" style="font-size:13px;flex-shrink:0;"></i><span><strong>Shopee:</strong> ${spAlert.m}</span></div>`;
-  ra.innerHTML=`${alertHtml}
-  <div style="padding:9px 13px;border-radius:var(--radius-md);font-size:12px;display:flex;align-items:center;gap:7px;margin-bottom:.75rem;background:${winner==='ml'?'#FFF8E1':'#FFF0EB'};border:0.5px solid ${winner==='ml'?'#FFB300':'#FF6D3B'};">
+  if(spAlert)alertHtml=`<div class="alert alert-${spAlert.t}"><i class="ti ti-alert-triangle" style="font-size:13px;flex-shrink:0;"></i><span><strong>Shopee:</strong> ${spAlert.m}</span></div>`;
+
+  ra.innerHTML=`
+  ${alertHtml}
+  <div class="winner-bar ${winner==='ml'?'ml':'sp'}">
     <i class="ti ti-trophy" style="font-size:14px;color:#BA7517;"></i>
-    <span style="color:${winner==='ml'?'#7B4F00':'#7B2200'};"><strong>${winner==='ml'?'Mercado Livre':'Shopee'}</strong> oferece maior lucro · Diferença: ${fmt(Math.abs(profitML-profitSP))}</span>
+    <span style="color:${winner==='ml'?'#7B4F00':'#7B2200'};"><strong>${winner==='ml'?'Mercado Livre':'Shopee'}</strong> oferece maior lucro neste produto · Diferença: ${fmt(Math.abs(profitML-profitSP))}</span>
   </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:.75rem;">
+  <div class="cmp-grid">
     <div class="cmp-col" style="border-color:${winner==='ml'?'#FFB300':'var(--border)'};">
-      <div style="font-size:12px;font-weight:500;color:#7B4F00;margin-bottom:.65rem;display:flex;align-items:center;gap:5px;flex-wrap:wrap;">
+      <div class="cmp-header" style="color:#7B4F00;">
         🟡 ML ${mlPlan.charAt(0).toUpperCase()+mlPlan.slice(1)} (${mlFeeP}%)
-        <div class="tip-wrap"><button class="tip-icon" aria-label="Info ML">!</button>${tooltipML(selectedCat.taxC,selectedCat.taxP,selectedCat.sub)}</div>
+        <div class="tip-wrap"><button class="tip-icon ml" aria-label="Info ML">!</button>${tooltipML(selectedCat.taxC,selectedCat.taxP,selectedCat.sub)}</div>
+        ${winner==='ml'?'<span class="tag tag-grn">Melhor</span>':''}
       </div>
       <div class="metric" style="margin-bottom:6px;"><div class="ml2">Preço de venda</div><div class="mv mlc">${priceML?fmt(priceML):'—'}</div></div>
       <div class="metric" style="margin-bottom:6px;"><div class="ml2">Lucro líquido</div><div class="mv ${profitML>=0?'green':'red'}">${priceML?fmt(profitML):'—'}</div></div>
@@ -711,9 +590,10 @@ function calculate(){
       <div class="metric"><div class="ml2">Comissão + fixo</div><div class="mv amber">${priceML?fmt(feeValML+fixML):'—'}</div></div>
     </div>
     <div class="cmp-col" style="border-color:${winner==='shopee'?'#FF6D3B':'var(--border)'};">
-      <div style="font-size:12px;font-weight:500;color:#7B2200;margin-bottom:.65rem;display:flex;align-items:center;gap:5px;flex-wrap:wrap;">
+      <div class="cmp-header" style="color:#7B2200;">
         🟠 Shopee <span class="tag" style="background:${sfSP.cor}18;color:${sfSP.cor};font-size:9px;">${sfSP.label.split('—')[0].trim()}</span>
         <div class="tip-wrap"><button class="tip-icon sp" aria-label="Info Shopee">!</button>${tooltipSP()}</div>
+        ${winner==='shopee'?'<span class="tag tag-grn">Melhor</span>':''}
       </div>
       <div class="metric" style="margin-bottom:6px;"><div class="ml2">Preço de venda</div><div class="mv spc">${priceSP?fmt(priceSP):'—'}</div></div>
       <div class="metric" style="margin-bottom:6px;"><div class="ml2">Lucro líquido</div><div class="mv ${profitSP>=0?'green':'red'}">${priceSP?fmt(profitSP):'—'}</div></div>
@@ -725,13 +605,14 @@ function calculate(){
     <div style="font-size:11px;font-weight:500;color:var(--text2);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.5rem;">Detalhamento completo</div>
     <div class="br"><span>Custo do produto</span><span class="bv">${fmt(cost)}</span></div>
     ${freteExML>0?`<div class="br"><span><i class="ti ti-truck"></i> Frete ML</span><span class="bv" style="color:#A32D2D;">- ${fmt(freteExML)}</span></div>`:''}
-    ${freteExSP>0?`<div class="br"><span><i class="ti ti-truck"></i> Frete Shopee (excedente do subsídio R$20)</span><span class="bv" style="color:#A32D2D;">- ${fmt(freteExSP)}</span></div>`:''}
-    ${freteExSP===0&&freteBruto>0&&freteBruto<=20?`<div class="br"><span><i class="ti ti-gift"></i> Frete Shopee coberto pelo subsídio</span><span class="bv" style="color:#3B6D11;">R$0</span></div>`:''}
+    ${freteExSP>0?`<div class="br"><span><i class="ti ti-truck"></i> Frete Shopee (excedente após subsídio R$20)</span><span class="bv" style="color:#A32D2D;">- ${fmt(freteExSP)}</span></div>`:''}
+    ${freteExSP===0&&freteBruto>0&&freteBruto<=20?`<div class="br"><span><i class="ti ti-gift"></i> Frete Shopee (coberto pelo subsídio)</span><span class="bv" style="color:#3B6D11;">R$0</span></div>`:''}
     <div class="br"><span>Comissão ML (${mlFeeP}%)${fixML>0?' + custo fixo ('+fmt(fixML)+')':''}</span><span class="bv" style="color:#A32D2D;">${priceML?'- '+fmt(feeValML+fixML):'—'}</span></div>
     <div class="br"><span>Comissão Shopee (${sfSP.pct}%) + taxa fixa R$${sfSP.fixo}</span><span class="bv" style="color:#A32D2D;">${priceSP?'- '+fmt(feeValSP+sfSP.fixo):'—'}</span></div>
     ${taxP>0?`<div class="br"><span>Imposto/DAS (${taxP}%)</span><span class="bv" style="color:#A32D2D;">ML ${priceML?fmt(taxValML):'—'} / SP ${priceSP?fmt(taxValSP):'—'}</span></div>`:''}
     <div class="br tot"><span>Lucro líquido</span><span class="bv" style="color:${winner==='ml'?'#7B4F00':'#7B2200'};">ML ${priceML?fmt(profitML):'—'} / SP ${priceSP?fmt(profitSP):'—'}</span></div>
   </div>`;
+
   lastCalc={prodName:document.getElementById('searchInput').value||'Produto',catSub:selectedCat.sub,catRoot:selectedCat.cat,mlPlan,mlFeeP,taxP,marginP,sfSP,priceML,priceSP,fixML,feeValML,taxValML,profitML,realML,feeValSP,taxValSP,profitSP,realSP,winner,freteExML,freteExSP,freteBruto};
   pdfBar.classList.add('show');
 }
@@ -746,16 +627,22 @@ function downloadPDF(){
   function sf(h){doc.setFillColor(...h.match(/\w\w/g).map(x=>parseInt(x,16)));}
   function sd(h){doc.setDrawColor(...h.match(/\w\w/g).map(x=>parseInt(x,16)));}
   let y=0;
-  sf('#FFB300');doc.rect(0,0,W,20,'F');doc.setFont('helvetica','bold');doc.setFontSize(13);doc.setTextColor(255,255,255);
-  doc.text('Calculadora Marketplace 2026',mg,9);doc.setFont('helvetica','normal');doc.setFontSize(8);
-  doc.text('Desenvolvida por Anderson Pereira · Tabelas oficiais mar/2026',mg,15);doc.text(now,W-mg,15,{align:'right'});y=27;
-  doc.setFont('helvetica','bold');doc.setFontSize(9.5);sv('#222222');doc.text('Produto e Categoria',mg,y);y+=2;
+  sf('#FFB300');doc.rect(0,0,W,20,'F');
+  doc.setFont('helvetica','bold');doc.setFontSize(13);doc.setTextColor(255,255,255);
+  doc.text('Calculadora Marketplace 2026',mg,9);
+  doc.setFont('helvetica','normal');doc.setFontSize(8);
+  doc.text('Desenvolvida por Anderson Pereira · Todas as categorias ML e Shopee · mar/2026',mg,15);
+  doc.text(now,W-mg,15,{align:'right'});y=27;
+  doc.setFont('helvetica','bold');doc.setFontSize(9.5);sv('#222222');
+  doc.text('Produto e Categoria',mg,y);y+=2;
   sd('#FFB300');doc.setLineWidth(0.5);doc.line(mg,y,mg+50,y);y+=5;
   [[d.prodName,'Produto'],[d.catSub+' > '+d.catRoot,'Categoria'],[fmtP(d.marginP),'Margem desejada'],[fmtP(d.taxP),'Imposto/DAS'],[d.freteBruto>0?fmt(d.freteBruto):'Coberto pela plataforma','Frete']].forEach(([val,lbl])=>{
     doc.setFont('helvetica','normal');doc.setFontSize(8.5);sv('#888888');doc.text(lbl+':',mg+2,y);sv('#111111');doc.text(val,mg+45,y);y+=5.5;
   });y+=3;
   const winLbl=d.winner==='ml'?'Mercado Livre oferece maior lucro':d.winner==='shopee'?'Shopee oferece maior lucro':'Resultados similares';
-  sf(d.winner==='ml'?'#FFF8E1':'#FFF0EB');doc.rect(mg,y,col,9,'F');doc.setFont('helvetica','bold');doc.setFontSize(9);sv(d.winner==='ml'?'#7B4F00':'#7B2200');doc.text('>> '+winLbl,mg+4,y+6.5);y+=14;
+  sf(d.winner==='ml'?'#FFF8E1':'#FFF0EB');doc.rect(mg,y,col,9,'F');
+  doc.setFont('helvetica','bold');doc.setFontSize(9);sv(d.winner==='ml'?'#7B4F00':'#7B2200');
+  doc.text('>> '+winLbl,mg+4,y+6.5);y+=14;
   function bloco(title,color,price,profit,realMargin,feeVal,fixedFee,taxVal,freteEx,feeP){
     sf(color);doc.rect(mg,y,col,7,'F');doc.setFont('helvetica','bold');doc.setFontSize(9.5);doc.setTextColor(255,255,255);doc.text(title,mg+3,y+5);y+=10;
     if(!price){sv('#888888');doc.setFont('helvetica','normal');doc.setFontSize(9);doc.text('Nao calculado.',mg+2,y);y+=8;return;}
@@ -766,12 +653,14 @@ function downloadPDF(){
       doc.setFont('helvetica','bold');doc.setFontSize(9.5);sv(c);doc.text(val,mg+ix*(bw+2)+bw/2,y+11,{align:'center'});
     });y+=18;
     [[`Comissao (${feeP}%)`,'- '+fmt(feeVal),'#A32D2D'],[fixedFee>0?'Taxa fixa':'',fixedFee>0?'- '+fmt(fixedFee):'','#A32D2D'],[freteEx>0?'Frete (custo seu)':'',freteEx>0?'- '+fmt(freteEx):'','#A32D2D'],[taxVal>0?'Imposto':'',taxVal>0?'- '+fmt(taxVal):'','#A32D2D'],['LUCRO LIQUIDO','= '+fmt(profit),profit>=0?'#3B6D11':'#A32D2D']].forEach(([lbl,val,c])=>{
-      if(!lbl)return;sd('#DDDDDD');doc.setLineWidth(0.2);doc.line(mg,y,W-mg,y);doc.setFont('helvetica',lbl==='LUCRO LIQUIDO'?'bold':'normal');doc.setFontSize(9);sv('#555555');doc.text(lbl,mg+2,y+5);sv(c);doc.text(val,W-mg-2,y+5,{align:'right'});y+=8;
+      if(!lbl)return;sd('#DDDDDD');doc.setLineWidth(0.2);doc.line(mg,y,W-mg,y);
+      doc.setFont('helvetica',lbl==='LUCRO LIQUIDO'?'bold':'normal');doc.setFontSize(9);sv('#555555');doc.text(lbl,mg+2,y+5);sv(c);doc.text(val,W-mg-2,y+5,{align:'right'});y+=8;
     });y+=3;
   }
   bloco(`Mercado Livre — ${d.mlPlan.charAt(0).toUpperCase()+d.mlPlan.slice(1)} (${d.mlFeeP}%)`,'#FFB300',d.priceML,d.profitML,d.realML,d.feeValML,d.fixML,d.taxValML,d.freteExML,d.mlFeeP);
   bloco(`Shopee — ${d.sfSP.label} (${d.sfSP.pct}%+R$${d.sfSP.fixo})`,'#FF6D3B',d.priceSP,d.profitSP,d.realSP,d.feeValSP,d.sfSP.fixo,d.taxValSP,d.freteExSP,d.sfSP.pct);
-  const pages=doc.getNumberOfPages();for(let i=1;i<=pages;i++){doc.setPage(i);sf('#F5F5F5');doc.rect(0,285,W,12,'F');doc.setFont('helvetica','normal');doc.setFontSize(7);sv('#999999');doc.text('Desenvolvida por Anderson Pereira · Calculadora Marketplace 2026',mg,291);doc.text('Pag '+i+'/'+pages,W-mg,291,{align:'right'});}
+  const pages=doc.getNumberOfPages();
+  for(let i=1;i<=pages;i++){doc.setPage(i);sf('#F5F5F5');doc.rect(0,285,W,12,'F');doc.setFont('helvetica','normal');doc.setFontSize(7);sv('#999999');doc.text('Desenvolvida por Anderson Pereira · Calculadora Marketplace 2026',mg,291);doc.text('Pag '+i+'/'+pages,W-mg,291,{align:'right'});}
   doc.save('precificacao_'+(d.prodName||'produto').replace(/\s+/g,'_').toLowerCase()+'.pdf');
 }
 
