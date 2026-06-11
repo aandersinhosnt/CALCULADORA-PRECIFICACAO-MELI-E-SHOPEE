@@ -204,7 +204,31 @@ input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-
   <div class="g3" style="margin-bottom:10px;">
     <div class="field"><label>Custo do produto (R$)</label><input type="number" id="costPrice" placeholder="0,00" min="0" step="0.01" oninput="onCostChange()"/></div>
     <div class="field"><label>Margem desejada (%)</label><input type="number" id="margin" placeholder="Ex: 30" min="0" max="79" step="0.5" oninput="onCostChange()"/></div>
-    <div class="field"><label>Imposto / DAS (%)</label><input type="number" id="taxRate" value="6" min="0" max="30" step="0.1" oninput="calculate()"/></div>
+    <div class="field"><label>Imposto / DAS (%)</label><input type="number" id="taxRate" value="10" min="0" max="30" step="0.1" oninput="calculate()"/></div>
+  </div>
+  <div class="g2" style="margin-top:10px;margin-bottom:4px;">
+    <div class="field">
+      <label style="display:flex;align-items:center;gap:4px;">
+        🟡 Frete Vendedor ML (R$)
+        <div class="tip-wrap">
+          <button class="tip-icon ml" aria-label="O que é Frete Vendedor ML" style="background:#FFB300;">?</button>
+          <div class="tip-box" style="left:0;transform:none;">
+            <div class="tip-title">Frete Vendedor — Mercado Livre (mar/2026)</div>
+            <div style="font-size:11px;color:var(--text2);margin-bottom:6px;">Antes chamado de "custo fixo", agora é cobrado como <strong>Frete Vendedor</strong> — desconto feito pelo ML por unidade vendida. O valor varia por produto, peso e dimensões. Consulte no <strong>Detalhes de Venda</strong> a coluna "Frete Vendedor".</div>
+            <div class="tip-row"><span>Exemplos reais (print)</span><span style="font-weight:500;color:#E65C00;">R$8,55 · R$8,15 · R$7,95 · R$8,01 · R$6,63 · R$7,48</span></div>
+            <div class="tip-row"><span>Onde encontrar</span><span style="font-weight:500;">Detalhes de Venda → Frete Vendedor</span></div>
+            <div class="tip-row"><span>Produtos acima R$79</span><span style="font-weight:500;">Frete obrigatório grátis ao comprador</span></div>
+            <div class="tip-row"><span>Se deixar vazio</span><span style="font-weight:500;">Usa estimativa automática por faixa</span></div>
+          </div>
+        </div>
+      </label>
+      <input type="number" id="mlFreteVendedor" placeholder="Ex: 8,55 (veja Detalhes de Venda)" min="0" step="0.01" oninput="calculate()"/>
+    </div>
+    <div style="display:flex;align-items:flex-end;">
+      <div style="font-size:11px;color:var(--text2);background:#FFF8E1;border:0.5px solid #FFB300;border-radius:var(--radius-md);padding:8px 10px;line-height:1.6;width:100%;">
+        <i class="ti ti-truck" style="color:#E65C00;"></i> <strong>Novo no ML:</strong> o antigo "custo fixo" virou <em>Frete Vendedor</em>. Consulte o valor exato do seu produto no <strong>Detalhes de Venda</strong>.
+      </div>
+    </div>
   </div>
   <div class="divider"></div>
   <div>
@@ -535,7 +559,20 @@ function updateFrete(){
 function calcMLCorreto(cost,freteEx,taxP,marginP,mlFeeP){
   const div=1-(mlFeeP/100)-(taxP/100)-(marginP/100);
   if(div<=0)return{price:null};
-  // Testa cada faixa de custo fixo
+
+  // Verifica se o usuário informou o Frete Vendedor manualmente
+  const freteVendedorManual=parseFloat(document.getElementById('mlFreteVendedor').value)||0;
+
+  if(freteVendedorManual>0){
+    // MODO PRECISO: usa o valor exato do Detalhes de Venda
+    const ff=freteVendedorManual;
+    const p=(cost+freteEx+ff)/div;
+    const feeVal=p*mlFeeP/100,taxVal=p*taxP/100;
+    const profit=p-(cost+freteEx+ff+feeVal+taxVal);
+    return{price:p,fixedFee:ff,feeVal,taxVal,profit,realMargin:(profit/p)*100,zona:false,manual:true};
+  }
+
+  // MODO ESTIMADO: tabela por faixa de preço (sem Frete Vendedor informado)
   const faixas=[
     {fixo:p=>p*0.5, valido:p=>p>0&&p<=12.5, analitico:(c,f,d)=>{const d2=d-0.5;return d2>0?(c+f)/d2:null;}},
     {fixo:()=>5.50, valido:p=>p>12.5&&p<=20},
@@ -552,18 +589,15 @@ function calcMLCorreto(cost,freteEx,taxP,marginP,mlFeeP){
       const ff=getMLFixedFee(p);
       const feeVal=p*mlFeeP/100,taxVal=p*taxP/100;
       const profit=p-(cost+freteEx+ff+feeVal+taxVal);
-      return{price:p,fixedFee:ff,feeVal,taxVal,profit,realMargin:(profit/p)*100,zona:false};
+      return{price:p,fixedFee:ff,feeVal,taxVal,profit,realMargin:(profit/p)*100,zona:false,manual:false};
     }
   }
-  // Zona de descontinuidade: pA<79 e pB(com fixo 6.75)>=79
-  // Usar pB: preço que cobre o custo fixo de R$6.75,
-  // mas como pB>=79 o custo fixo real será R$0 -> margem real maior que a pedida.
-  // Alertar o usuário sobre isso.
+  // Zona de descontinuidade
   const pB=(cost+freteEx+6.75)/div;
   const feeVal=pB*mlFeeP/100,taxVal=pB*taxP/100;
-  const profit=pB-(cost+freteEx+0+feeVal+taxVal); // sem custo fixo pois pB>=79
-  const pSemFixo=(cost+freteEx)/div; // preço sem custo fixo (ficaria abaixo de R$79)
-  return{price:pB,fixedFee:0,feeVal,taxVal,profit,realMargin:(profit/pB)*100,zona:true,pSemFixo};
+  const profit=pB-(cost+freteEx+0+feeVal+taxVal);
+  const pSemFixo=(cost+freteEx)/div;
+  return{price:pB,fixedFee:0,feeVal,taxVal,profit,realMargin:(profit/pB)*100,zona:true,manual:false,pSemFixo};
 }
 
 function iterSP(cost,freteEx,taxP,marginP){
@@ -608,9 +642,15 @@ function calculate(){
   const winner=priceML&&priceSP?(profitML>=profitSP?'ml':'shopee'):'none';
   const spAlert=priceSP?checkZone(priceSP):null;
   let alertHtml='';
+  // Alerta: modo manual (preciso) ou estimado
+  if(mlResult.manual){
+    alertHtml+=`<div class="alert alert-grn" style="margin-bottom:.5rem;"><i class="ti ti-check" style="font-size:13px;flex-shrink:0;"></i><span><strong>ML — Frete Vendedor informado:</strong> usando o valor exato de ${fmt(fixML)} do Detalhes de Venda. Cálculo preciso.</span></div>`;
+  } else if(!mlResult.zona){
+    alertHtml+=`<div class="alert" style="margin-bottom:.5rem;background:var(--bg2);border:0.5px solid var(--border);color:var(--text2);"><i class="ti ti-info-circle" style="font-size:13px;flex-shrink:0;"></i><span>ML — usando estimativa automática de Frete Vendedor. Para cálculo preciso, informe o valor do <strong>Detalhes de Venda → Frete Vendedor</strong>.</span></div>`;
+  }
   // Alerta de zona de descontinuidade do custo fixo ML
   if(mlResult.zona){
-    alertHtml+=`<div class="alert alert-amb"><i class="ti ti-alert-triangle" style="font-size:13px;flex-shrink:0;"></i><div><strong>Mercado Livre — Zona de custo fixo:</strong> para esse custo e margem, o preço ideal (R${fmt(mlResult.pSemFixo)}) cai na faixa de custo fixo (R$6,75) do ML. A calculadora ajustou o preço para R${fmt(priceML)} para cobrir esse custo — resultando em margem real de ${fmtP(realML)} (acima da desejada). Alternativa: reduzir a margem para precificar abaixo de R$${mlResult.pSemFixo<79?'79':'79'}.</div></div>`;}
+    alertHtml+=`<div class="alert alert-amb"><i class="ti ti-alert-triangle" style="font-size:13px;flex-shrink:0;"></i><div><strong>Mercado Livre — Ajuste de faixa:</strong> para esse custo e margem, o preço ideal seria ${fmt(mlResult.pSemFixo)} mas cai na faixa de Frete Vendedor estimado. A calculadora ajustou para ${fmt(priceML)} (margem real ${fmtP(realML)}). Para evitar isso, informe o Frete Vendedor exato do Detalhes de Venda.</div></div>`;}
 
   if(spAlert)alertHtml=`<div class="alert alert-${spAlert.t}"><i class="ti ti-alert-triangle" style="font-size:13px;flex-shrink:0;"></i><span><strong>Shopee:</strong> ${spAlert.m}</span></div>`;
 
@@ -650,13 +690,15 @@ function calculate(){
     ${freteExML>0?`<div class="br"><span><i class="ti ti-truck"></i> Frete ML</span><span class="bv" style="color:#A32D2D;">- ${fmt(freteExML)}</span></div>`:''}
     ${freteExSP>0?`<div class="br"><span><i class="ti ti-truck"></i> Frete Shopee (excedente após subsídio R$20)</span><span class="bv" style="color:#A32D2D;">- ${fmt(freteExSP)}</span></div>`:''}
     ${freteExSP===0&&freteBruto>0&&freteBruto<=20?`<div class="br"><span><i class="ti ti-gift"></i> Frete Shopee (coberto pelo subsídio)</span><span class="bv" style="color:#3B6D11;">R$0</span></div>`:''}
-    <div class="br"><span>Comissão ML (${mlFeeP}%)${fixML>0?' + custo fixo ('+fmt(fixML)+')':''}</span><span class="bv" style="color:#A32D2D;">${priceML?'- '+fmt(feeValML+fixML):'—'}</span></div>
+    <div class="br"><span>Comissão ML (${mlFeeP}%)</span><span class="bv" style="color:#A32D2D;">${priceML?'- '+fmt(feeValML):'—'}</span></div>
+    ${fixML>0?`<div class="br"><span><i class="ti ti-truck"></i> Frete Vendedor ML ${mlResult&&mlResult.manual?'<span class="tag tag-grn" style="font-size:9px;">Preciso</span>':'<span class="tag tag-amb" style="font-size:9px;">Estimado</span>'}</span><span class="bv" style="color:#A32D2D;">- ${fmt(fixML)}</span></div>`:''}
     <div class="br"><span>Comissão Shopee (${sfSP.pct}%) + taxa fixa R$${sfSP.fixo}</span><span class="bv" style="color:#A32D2D;">${priceSP?'- '+fmt(feeValSP+sfSP.fixo):'—'}</span></div>
     ${taxP>0?`<div class="br"><span>Imposto/DAS (${taxP}%)</span><span class="bv" style="color:#A32D2D;">ML ${priceML?fmt(taxValML):'—'} / SP ${priceSP?fmt(taxValSP):'—'}</span></div>`:''}
     <div class="br tot"><span>Lucro líquido</span><span class="bv" style="color:${winner==='ml'?'#7B4F00':'#7B2200'};">ML ${priceML?fmt(profitML):'—'} / SP ${priceSP?fmt(profitSP):'—'}</span></div>
   </div>`;
 
-  lastCalc={prodName:document.getElementById('searchInput').value||'Produto',catSub:selectedCat.sub,catRoot:selectedCat.cat,mlPlan,mlFeeP,taxP,marginP,sfSP,priceML,priceSP,fixML,feeValML,taxValML,profitML,realML,feeValSP,taxValSP,profitSP,realSP,winner,freteExML,freteExSP,freteBruto};
+  const freteVendedorManual=parseFloat(document.getElementById('mlFreteVendedor').value)||0;
+  lastCalc={prodName:document.getElementById('searchInput').value||'Produto',catSub:selectedCat.sub,catRoot:selectedCat.cat,mlPlan,mlFeeP,taxP,marginP,sfSP,priceML,priceSP,fixML,feeValML,taxValML,profitML,realML,feeValSP,taxValSP,profitSP,realSP,winner,freteExML,freteExSP,freteBruto,freteVendedorManual,mlResultManual:mlResult&&mlResult.manual};
   pdfBar.classList.add('show');
 }
 
@@ -695,7 +737,7 @@ function downloadPDF(){
       doc.setFont('helvetica','normal');doc.setFontSize(7);sv('#888888');doc.text(lbl.toUpperCase(),mg+ix*(bw+2)+bw/2,y+5,{align:'center'});
       doc.setFont('helvetica','bold');doc.setFontSize(9.5);sv(c);doc.text(val,mg+ix*(bw+2)+bw/2,y+11,{align:'center'});
     });y+=18;
-    [[`Comissao (${feeP}%)`,'- '+fmt(feeVal),'#A32D2D'],[fixedFee>0?'Taxa fixa':'',fixedFee>0?'- '+fmt(fixedFee):'','#A32D2D'],[freteEx>0?'Frete (custo seu)':'',freteEx>0?'- '+fmt(freteEx):'','#A32D2D'],[taxVal>0?'Imposto':'',taxVal>0?'- '+fmt(taxVal):'','#A32D2D'],['LUCRO LIQUIDO','= '+fmt(profit),profit>=0?'#3B6D11':'#A32D2D']].forEach(([lbl,val,c])=>{
+    [[`Comissao (${feeP}%)`,'- '+fmt(feeVal),'#A32D2D'],[fixedFee>0?`Frete Vendedor ML${d.mlResultManual?' (Preciso)':' (Estimado)'}`:'' ,fixedFee>0?'- '+fmt(fixedFee):'','#A32D2D'],[freteEx>0?'Frete Comprador (custo seu)':'',freteEx>0?'- '+fmt(freteEx):'','#A32D2D'],[taxVal>0?'Imposto':'',taxVal>0?'- '+fmt(taxVal):'','#A32D2D'],['LUCRO LIQUIDO','= '+fmt(profit),profit>=0?'#3B6D11':'#A32D2D']].forEach(([lbl,val,c])=>{
       if(!lbl)return;sd('#DDDDDD');doc.setLineWidth(0.2);doc.line(mg,y,W-mg,y);
       doc.setFont('helvetica',lbl==='LUCRO LIQUIDO'?'bold':'normal');doc.setFontSize(9);sv('#555555');doc.text(lbl,mg+2,y+5);sv(c);doc.text(val,W-mg-2,y+5,{align:'right'});y+=8;
     });y+=3;
