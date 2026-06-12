@@ -281,6 +281,32 @@ input:checked+.swsl:before{transform:translateX(15px);}
       <div class="plan-desc">Parcelamento sem juros · Máxima exposição</div>
     </div>
   </div>
+  <div style="margin-top:12px;padding:10px 12px;background:#FFFDE0;border:1.5px solid #FFE600;border-radius:8px;">
+    <div style="font-size:11px;font-weight:700;color:#5A4000;margin-bottom:8px;display:flex;align-items:center;gap:5px;">
+      <i class="ti ti-pencil"></i> Comissões editáveis
+      <div class="tip-wrap">
+        <button class="tip-icon ml" aria-label="Por que editar a comissão?" style="background:#FFE600;color:#5A4000;">?</button>
+        <div class="tip-box" style="left:0;transform:none;width:260px;">
+          <div class="tip-title">Por que editar a comissão?</div>
+          <div style="font-size:11px;color:#5a5a52;margin-bottom:6px;">O ML cobra comissões diferentes por <strong>subcategoria específica</strong>. Ex: Impressoras = 11%/16%, mas Filamento PLA = 13%/18%. Veja o valor exato na tela de <strong>Tipo de Anúncio</strong> do seu produto no ML, clicando no ícone ⓘ ao lado da tarifa.</div>
+          <div class="tip-row"><span>Clássico costuma ser</span><span style="font-weight:600;color:#EE4D2D;">10% a 14%</span></div>
+          <div class="tip-row"><span>Premium costuma ser</span><span style="font-weight:600;color:#EE4D2D;">15% a 19%</span></div>
+          <div class="tip-row"><span>Se deixar vazio</span><span style="font-weight:600;">usa taxa da categoria</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="g2">
+      <div class="field">
+        <label>Comissão Clássico (%) — editável</label>
+        <input type="number" id="taxaClassicoEdit" placeholder="Sugerido pela categoria" min="1" max="30" step="0.5" oninput="onComissaoEdit()"/>
+      </div>
+      <div class="field">
+        <label>Comissão Premium (%) — editável</label>
+        <input type="number" id="taxaPremiumEdit" placeholder="Sugerido pela categoria" min="1" max="30" step="0.5" oninput="onComissaoEdit()"/>
+      </div>
+    </div>
+    <div style="font-size:10px;color:#9b9b90;margin-top:5px;"><i class="ti ti-info-circle"></i> Deixe vazio para usar a taxa sugerida. Preencha com o valor exato que o ML mostra no seu anúncio.</div>
+  </div>
 </div>
 
 <!-- DADOS -->
@@ -397,21 +423,21 @@ const CATS=[
   {cat:'Casa, Móveis e Decoração',sub:'Armários e Guarda-Roupas',taxC:11,taxP:16,keys:['guarda-roupa','armario','closet','roupeiro']},
   {cat:'Casa, Móveis e Decoração',sub:'Mesas e Cadeiras',taxC:11,taxP:16,keys:['mesa de jantar','cadeira','mesa escritorio','mesa de centro','banqueta','mesa dobravel','escrivaninha']},
   {cat:'Casa, Móveis e Decoração',sub:'Estantes e Racks',taxC:11,taxP:16,keys:['estante','rack','prateleira','nicho','sapateira','aparador','cristaleira']},
-  {cat:'Casa, Móveis e Decoração',sub:'Decoração',taxC:11,taxP:16,keys:['quadro decorativo','espelho','luminaria','abajur','vaso decorativo','tapete','cortina','almofada','porta-retrato']},
+  {cat:'Casa, Móveis e Decoração',sub:'Decoração',taxC:12,taxP:17,keys:['quadro decorativo','espelho','luminaria','abajur','vaso decorativo','tapete','cortina','almofada','porta-retrato']},
   {cat:'Casa, Móveis e Decoração',sub:'Cama, Mesa e Banho',taxC:11,taxP:16,keys:['jogo de cama','roupa de cama','toalha','edredom','cobertor','travesseiro']},
-  {cat:'Casa, Móveis e Decoração',sub:'Utilidades Domésticas',taxC:11,taxP:16,keys:['jogo de panelas','frigideira','chaleira','conjunto de facas','talheres','panela de pressao','forma de bolo']},
+  {cat:'Casa, Móveis e Decoração',sub:'Utilidades Domésticas',taxC:12,taxP:17,keys:['jogo de panelas','frigideira','chaleira','conjunto de facas','talheres','panela de pressao','forma de bolo']},
   {cat:'Ferramentas e Construção',sub:'Ferramentas Elétricas',taxC:11,taxP:16,keys:['furadeira','parafusadeira','makita','dewalt','bosch','black decker','serra circular','esmerilhadeira','lixadeira','compressor','martelete']},
   {cat:'Ferramentas e Construção',sub:'Ferramentas Manuais',taxC:11,taxP:16,keys:['martelo','chave de fenda','alicate','chave inglesa','nivel','fita metrica','trena','serrote']},
   {cat:'Ferramentas e Construção',sub:'Materiais Elétricos',taxC:11,taxP:16,keys:['disjuntor','tomada','interruptor','fio eletrico','lampada led','luminaria led','fita led','cabo eletrico']},
   {cat:'Ferramentas e Construção',sub:'Tintas e Acabamentos',taxC:11,taxP:16,keys:['tinta parede','rolo de pintura','pincel','verniz','textura acrilica','primer','selador','fita crepe']},
   {cat:'Ferramentas e Construção',sub:'Hidráulica',taxC:11,taxP:16,keys:['cano pvc','conexao hidraulica','registro','torneira','chuveiro','caixa dagua','valvula']},
-  {cat:'Esportes e Fitness',sub:'Musculação e Fitness',taxC:14,taxP:19,keys:['haltere','barra musculacao','anilha','kettlebell','banco musculacao','esteira','bicicleta ergometrica','corda de pular','elastico']},
-  {cat:'Esportes e Fitness',sub:'Bicicletas e Ciclismo',taxC:14,taxP:19,keys:['bicicleta','bike','mtb','speed','bicicleta eletrica','patinete','skate','patins','capacete bike']},
-  {cat:'Esportes e Fitness',sub:'Futebol',taxC:14,taxP:19,keys:['bola de futebol','chuteira','caneleira','camisa futebol','trave']},
-  {cat:'Esportes e Fitness',sub:'Natação e Aquático',taxC:14,taxP:19,keys:['oculos de natacao','maio','sunga','prancha de surf','snorkel','boia']},
-  {cat:'Esportes e Fitness',sub:'Artes Marciais',taxC:14,taxP:19,keys:['kimono','luva boxe','protetor bucal','saco de pancada','tatame','bjj','muay thai','mma']},
-  {cat:'Esportes e Fitness',sub:'Camping e Aventura',taxC:14,taxP:19,keys:['barraca camping','saco de dormir','mochila trilha','lanterna','canivete']},
-  {cat:'Esportes e Fitness',sub:'Vestuário Esportivo',taxC:14,taxP:19,keys:['camiseta esportiva','shorts academia','top fitness','calca legging','tenis academia']},
+  {cat:'Esportes e Fitness',sub:'Musculação e Fitness',taxC:12,taxP:17,keys:['haltere','barra musculacao','anilha','kettlebell','banco musculacao','esteira','bicicleta ergometrica','corda de pular','elastico']},
+  {cat:'Esportes e Fitness',sub:'Bicicletas e Ciclismo',taxC:12,taxP:17,keys:['bicicleta','bike','mtb','speed','bicicleta eletrica','patinete','skate','patins','capacete bike']},
+  {cat:'Esportes e Fitness',sub:'Futebol',taxC:12,taxP:17,keys:['bola de futebol','chuteira','caneleira','camisa futebol','trave']},
+  {cat:'Esportes e Fitness',sub:'Natação e Aquático',taxC:12,taxP:17,keys:['oculos de natacao','maio','sunga','prancha de surf','snorkel','boia']},
+  {cat:'Esportes e Fitness',sub:'Artes Marciais',taxC:12,taxP:17,keys:['kimono','luva boxe','protetor bucal','saco de pancada','tatame','bjj','muay thai','mma']},
+  {cat:'Esportes e Fitness',sub:'Camping e Aventura',taxC:12,taxP:17,keys:['barraca camping','saco de dormir','mochila trilha','lanterna','canivete']},
+  {cat:'Esportes e Fitness',sub:'Vestuário Esportivo',taxC:12,taxP:17,keys:['camiseta esportiva','shorts academia','top fitness','calca legging','tenis academia']},
   {cat:'Acessórios para Veículos',sub:'Acessórios para Carros',taxC:12,taxP:17,keys:['tapete automotivo','capa banco','volante esportivo','suporte veicular','carregador veicular','camera de re','sensor de estacionamento']},
   {cat:'Acessórios para Veículos',sub:'Som Automotivo',taxC:14,taxP:19,keys:['som automotivo','radio automotivo','subwoofer carro','auto radio','alto falante carro']},
   {cat:'Carros, Motos e Outros',sub:'Peças Automotivas',taxC:14,taxP:19,keys:['filtro de oleo','filtro de ar','vela ignicao','pastilha freio','amortecedor','bateria carro','farol']},
@@ -476,7 +502,7 @@ const SHOPEE_FAIXAS=[
   {min:500,max:Infinity,pct:14,fixo:26,label:'Faixa 6 — acima de R$500',cor:'#3C3489'},
 ];
 
-let selectedCat=null, mlPlan='premium', lastCalc=null, activeIdx=-1, filteredList=[];
+let selectedCat=null, mlPlan='premium', lastCalc=null, activeIdx=-1, filteredList=[], taxaFoiEditada=false;
 
 function normalize(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
 function getShopeeFaixa(p){return SHOPEE_FAIXAS.find(f=>p>=f.min&&p<=f.max)||SHOPEE_FAIXAS[SHOPEE_FAIXAS.length-1];}
@@ -571,9 +597,15 @@ function doSearch(){
 
 function showCatInfo(){
   if(!selectedCat)return;
+  // Limpa campos editáveis ao trocar de categoria (carrega novo sugerido)
+  document.getElementById('taxaClassicoEdit').value='';
+  document.getElementById('taxaPremiumEdit').value='';
   const c=selectedCat;
   document.getElementById('feeC').textContent=c.taxC+'%';
   document.getElementById('feeP').textContent=c.taxP+'%';
+  // Atualiza placeholder dos campos editáveis com o sugerido
+  document.getElementById('taxaClassicoEdit').placeholder='Sugerido: '+c.taxC+'%';
+  document.getElementById('taxaPremiumEdit').placeholder='Sugerido: '+c.taxP+'%';
   const el=document.getElementById('selectedCatInfo');
   el.style.display='block';
   el.innerHTML=`
@@ -600,6 +632,25 @@ function showCatInfo(){
     </div>`;
 }
 
+function onComissaoEdit(){
+  // Quando usuário edita comissão manualmente, atualiza o display dos cards
+  const c=document.getElementById('taxaClassicoEdit').value;
+  const p=document.getElementById('taxaPremiumEdit').value;
+  if(c) document.getElementById('feeC').textContent=parseFloat(c).toFixed(0)+'%';
+  else if(selectedCat) document.getElementById('feeC').textContent=selectedCat.taxC+'%';
+  if(p) document.getElementById('feeP').textContent=parseFloat(p).toFixed(0)+'%';
+  else if(selectedCat) document.getElementById('feeP').textContent=selectedCat.taxP+'%';
+  calculate();
+}
+
+function getMLFeeAtual(){
+  // Retorna a comissão real a usar: editada pelo usuário OU sugerida pela categoria
+  const c=parseFloat(document.getElementById('taxaClassicoEdit').value)||0;
+  const p=parseFloat(document.getElementById('taxaPremiumEdit').value)||0;
+  if(mlPlan==='premium') return p>0?p:(selectedCat?selectedCat.taxP:16);
+  return c>0?c:(selectedCat?selectedCat.taxC:11);
+}
+
 function selectPlan(plan){
   mlPlan=plan;
   document.getElementById('planC').className='plan-card'+(plan==='classico'?' sel':'');
@@ -619,7 +670,7 @@ function updateFrete(){
   const marginP=parseFloat(document.getElementById('margin').value)||30;
   const taxP=parseFloat(document.getElementById('taxRate').value)||6;
   if(!selectedCat||cost<=0)return;
-  const mlFeeP=mlPlan==='premium'?selectedCat.taxP:selectedCat.taxC;
+  const mlFeeP=getMLFeeAtual();
   const div=1-(mlFeeP/100)-(taxP/100)-(marginP/100);
   const precoEst=div>0?(cost+6)/div:cost*2;
   const info=document.getElementById('freteAutoInfo');
@@ -700,7 +751,7 @@ function calculate(){
   const cost=parseFloat(document.getElementById('costPrice').value)||0;
   const marginP=parseFloat(document.getElementById('margin').value)||0;
   const taxP=parseFloat(document.getElementById('taxRate').value)||0;
-  const mlFeeP=mlPlan==='premium'?selectedCat.taxP:selectedCat.taxC;
+  const mlFeeP=getMLFeeAtual();
   const ra=document.getElementById('resultArea');
   const pdfBar=document.getElementById('pdfBar');
   lastCalc=null;
@@ -783,7 +834,10 @@ function calculate(){
   </div>`;
 
   const freteVendedorManual=parseFloat(document.getElementById('mlFreteVendedor').value)||0;
-  lastCalc={prodName:document.getElementById('searchInput').value||'Produto',catSub:selectedCat.sub,catRoot:selectedCat.cat,mlPlan,mlFeeP,taxP,marginP,sfSP,priceML,priceSP,fixML,feeValML,taxValML,profitML,realML,feeValSP,taxValSP,profitSP,realSP,winner,freteExML,freteExSP,freteBruto,freteVendedorManual,mlResultManual:mlResult&&mlResult.manual};
+  const taxaEditadaC=parseFloat(document.getElementById('taxaClassicoEdit').value)||0;
+  const taxaEditadaP=parseFloat(document.getElementById('taxaPremiumEdit').value)||0;
+  taxaFoiEditada=(mlPlan==='premium'&&taxaEditadaP>0)||(mlPlan==='classico'&&taxaEditadaC>0);
+  lastCalc={prodName:document.getElementById('searchInput').value||'Produto',catSub:selectedCat.sub,catRoot:selectedCat.cat,mlPlan,mlFeeP,taxFoiEditada,taxP,marginP,sfSP,priceML,priceSP,fixML,feeValML,taxValML,profitML,realML,feeValSP,taxValSP,profitSP,realSP,winner,freteExML,freteExSP,freteBruto,freteVendedorManual,mlResultManual:mlResult&&mlResult.manual};
   pdfBar.classList.add('show');
 }
 
