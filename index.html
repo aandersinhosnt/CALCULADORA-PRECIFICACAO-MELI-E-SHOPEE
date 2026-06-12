@@ -358,10 +358,6 @@ input:checked+.swsl:before{transform:translateX(15px);}
 <!-- RESULTADO -->
 <div id="resultArea"></div>
 
-<div class="pdf-bar" id="pdfBar">
-  <div style="font-size:12px;color:#5A4000;display:flex;align-items:center;gap:6px;"><i class="ti ti-file-text" style="font-size:15px;"></i> Relatório pronto para exportar</div>
-  <button class="btn-pdf" onclick="downloadPDF()"><i class="ti ti-file-download"></i> Baixar PDF</button>
-</div>
 
 <div class="footer-credit">
   <i class="ti ti-code"></i> Desenvolvida por <strong>Anderson Pereira</strong> · Calculadora Marketplace 2026 · Todas as categorias ML e Shopee
@@ -502,7 +498,7 @@ const SHOPEE_FAIXAS=[
   {min:500,max:Infinity,pct:14,fixo:26,label:'Faixa 6 — acima de R$500',cor:'#3C3489'},
 ];
 
-let selectedCat=null, mlPlan='premium', lastCalc=null, activeIdx=-1, filteredList=[], taxaFoiEditada=false;
+let selectedCat=null, mlPlan='premium', lastCalc=null, activeIdx=-1, filteredList=[];
 
 function normalize(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
 function getShopeeFaixa(p){return SHOPEE_FAIXAS.find(f=>p>=f.min&&p<=f.max)||SHOPEE_FAIXAS[SHOPEE_FAIXAS.length-1];}
@@ -634,8 +630,11 @@ function showCatInfo(){
 
 function onComissaoEdit(){
   // Quando usuário edita comissão manualmente, atualiza o display dos cards
-  const c=document.getElementById('taxaClassicoEdit').value;
-  const p=document.getElementById('taxaPremiumEdit').value;
+  const elC=document.getElementById('taxaClassicoEdit');
+  const elP=document.getElementById('taxaPremiumEdit');
+  if(!elC||!elP)return;
+  const c=elC.value;
+  const p=elP.value;
   if(c) document.getElementById('feeC').textContent=parseFloat(c).toFixed(0)+'%';
   else if(selectedCat) document.getElementById('feeC').textContent=selectedCat.taxC+'%';
   if(p) document.getElementById('feeP').textContent=parseFloat(p).toFixed(0)+'%';
@@ -645,8 +644,10 @@ function onComissaoEdit(){
 
 function getMLFeeAtual(){
   // Retorna a comissão real a usar: editada pelo usuário OU sugerida pela categoria
-  const c=parseFloat(document.getElementById('taxaClassicoEdit').value)||0;
-  const p=parseFloat(document.getElementById('taxaPremiumEdit').value)||0;
+  const elC=document.getElementById('taxaClassicoEdit');
+  const elP=document.getElementById('taxaPremiumEdit');
+  const c=elC?(parseFloat(elC.value)||0):0;
+  const p=elP?(parseFloat(elP.value)||0):0;
   if(mlPlan==='premium') return p>0?p:(selectedCat?selectedCat.taxP:16);
   return c>0?c:(selectedCat?selectedCat.taxC:11);
 }
@@ -697,7 +698,8 @@ function calcMLCorreto(cost,freteEx,taxP,marginP,mlFeeP){
   if(div<=0)return{price:null};
 
   // Verifica se o usuário informou o Frete Vendedor manualmente
-  const freteVendedorManual=parseFloat(document.getElementById('mlFreteVendedor').value)||0;
+  const elFV=document.getElementById('mlFreteVendedor');
+  const freteVendedorManual=elFV?(parseFloat(elFV.value)||0):0;
 
   if(freteVendedorManual>0){
     // MODO PRECISO: usa o valor exato do Detalhes de Venda
@@ -753,9 +755,8 @@ function calculate(){
   const taxP=parseFloat(document.getElementById('taxRate').value)||0;
   const mlFeeP=getMLFeeAtual();
   const ra=document.getElementById('resultArea');
-  const pdfBar=document.getElementById('pdfBar');
-  lastCalc=null;
-  if(cost<=0||marginP<=0){ra.innerHTML='';pdfBar.classList.remove('show');return;}
+    lastCalc=null;
+  if(cost<=0||marginP<=0){ra.innerHTML='';return;}
   const freteCampoVis=document.getElementById('freteCampo').style.display!=='none';
   const freteBruto=freteCampoVis?(parseFloat(document.getElementById('freteCusto').value)||0):0;
   const freteExSP=freteCampoVis?Math.max(0,freteBruto-20):0;
@@ -764,7 +765,7 @@ function calculate(){
   const priceSP=iterSP(cost,freteExSP,taxP,marginP);
   if(!mlResult.price&&!priceSP){
     ra.innerHTML=`<div class="alert alert-red"><i class="ti ti-alert-circle" style="font-size:13px;flex-shrink:0;"></i><span>Margem + taxas ultrapassam 100%. Reduza a margem desejada.</span></div>`;
-    pdfBar.classList.remove('show');return;
+    return;
   }
   const priceML=mlResult.price;
   const fixML=mlResult.fixedFee||0;
@@ -781,14 +782,12 @@ function calculate(){
   // Alerta: modo manual (preciso) ou estimado
   if(mlResult.manual){
     alertHtml+=`<div class="alert alert-grn" style="margin-bottom:.5rem;"><i class="ti ti-check" style="font-size:13px;flex-shrink:0;"></i><span><strong>ML — Frete Vendedor informado:</strong> usando o valor exato de ${fmt(fixML)} do Detalhes de Venda. Cálculo preciso.</span></div>`;
-  } else if(!mlResult.zona){
-    alertHtml+=`<div class="alert" style="margin-bottom:.5rem;background:#f7f7f5;border:0.5px solid rgba(0,0,0,0.10);color:#5a5a52;"><i class="ti ti-info-circle" style="font-size:13px;flex-shrink:0;"></i><span>ML — usando estimativa automática de Frete Vendedor. Para cálculo preciso, informe o valor do <strong>Detalhes de Venda → Frete Vendedor</strong>.</span></div>`;
   }
   // Alerta de zona de descontinuidade do custo fixo ML
   if(mlResult.zona){
     alertHtml+=`<div class="alert alert-amb"><i class="ti ti-alert-triangle" style="font-size:13px;flex-shrink:0;"></i><div><strong>Mercado Livre — Ajuste de faixa:</strong> para esse custo e margem, o preço ideal seria ${fmt(mlResult.pSemFixo)} mas cai na faixa de Frete Vendedor estimado. A calculadora ajustou para ${fmt(priceML)} (margem real ${fmtP(realML)}). Para evitar isso, informe o Frete Vendedor exato do Detalhes de Venda.</div></div>`;}
 
-  if(spAlert)alertHtml=`<div class="alert alert-${spAlert.t}"><i class="ti ti-alert-triangle" style="font-size:13px;flex-shrink:0;"></i><span><strong>Shopee:</strong> ${spAlert.m}</span></div>`;
+  if(spAlert)alertHtml+=`<div class="alert alert-${spAlert.t}"><i class="ti ti-alert-triangle" style="font-size:13px;flex-shrink:0;"></i><span><strong>Shopee:</strong> ${spAlert.m}</span></div>`;
 
   ra.innerHTML=`
   ${alertHtml}
@@ -831,14 +830,15 @@ function calculate(){
     <div class="br"><span>Comissão Shopee (${sfSP.pct}%) + taxa fixa R$${sfSP.fixo}</span><span class="bv" style="color:#A32D2D;">${priceSP?'- '+fmt(feeValSP+sfSP.fixo):'—'}</span></div>
     ${taxP>0?`<div class="br"><span>Imposto/DAS (${taxP}%)</span><span class="bv" style="color:#A32D2D;">ML ${priceML?fmt(taxValML):'—'} / SP ${priceSP?fmt(taxValSP):'—'}</span></div>`:''}
     <div class="br tot"><span>Lucro líquido</span><span class="bv" style="color:${winner==='ml'?'#5A4000':'#7A1A08'};">ML ${priceML?fmt(profitML):'—'} / SP ${priceSP?fmt(profitSP):'—'}</span></div>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#ffffff;border:2px solid #EE4D2D;border-radius:8px;margin-top:.85rem;box-shadow:0 2px 8px rgba(238,77,45,0.12);">
+    <div style="font-size:12px;color:#5A4000;display:flex;align-items:center;gap:6px;"><i class="ti ti-file-text" style="font-size:15px;"></i> Relatório pronto para exportar</div>
+    <button class="btn-pdf" onclick="downloadPDF()"><i class="ti ti-file-download"></i> Baixar PDF</button>
   </div>`;
 
-  const freteVendedorManual=parseFloat(document.getElementById('mlFreteVendedor').value)||0;
-  const taxaEditadaC=parseFloat(document.getElementById('taxaClassicoEdit').value)||0;
-  const taxaEditadaP=parseFloat(document.getElementById('taxaPremiumEdit').value)||0;
-  taxaFoiEditada=(mlPlan==='premium'&&taxaEditadaP>0)||(mlPlan==='classico'&&taxaEditadaC>0);
+  const elFV=document.getElementById('mlFreteVendedor');
+  const freteVendedorManual=elFV?(parseFloat(elFV.value)||0):0;
   lastCalc={prodName:document.getElementById('searchInput').value||'Produto',catSub:selectedCat.sub,catRoot:selectedCat.cat,mlPlan,mlFeeP,taxFoiEditada,taxP,marginP,sfSP,priceML,priceSP,fixML,feeValML,taxValML,profitML,realML,feeValSP,taxValSP,profitSP,realSP,winner,freteExML,freteExSP,freteBruto,freteVendedorManual,mlResultManual:mlResult&&mlResult.manual};
-  pdfBar.classList.add('show');
 }
 
 function downloadPDF(){
